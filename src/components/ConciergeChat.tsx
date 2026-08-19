@@ -501,13 +501,18 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
 
           </div>
 
-          <div className="mt-2 flex items-center justify-between text-[11px] text-zinc-400 px-1">
-            <span>The Grand Lumière • Powered by Gemini AI</span>
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-zinc-400 px-1">
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              <span>The Grand Lumière • Inteligência Artificial Conectada</span>
+            </div>
             <button
+              id="btn-footer-admin-link"
               onClick={onOpenAdmin}
-              className="text-zinc-500 hover:text-zinc-900 underline underline-offset-2 transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 py-1 text-[11px] text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 hover:border-zinc-300 font-medium transition-all shadow-xs cursor-pointer"
             >
-              Acessar Painel de Controle e Base de Dados
+              <Bot className="h-3 w-3 text-zinc-500" />
+              <span>Painel do Administrador (Configurar Agente & Logs)</span>
             </button>
           </div>
 

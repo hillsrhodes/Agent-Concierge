@@ -127,11 +127,13 @@ export default function App() {
       </main>
 
       {/* Floating Action Button (Widget Launcher no canto da tela para WordPress) */}
-      <FloatingWidget
-        guestInfo={guestInfo}
-        onOpenEmbedModal={() => setIsEmbedModalOpen(true)}
-        onOpenFullApp={() => handleTabChange('chat')}
-      />
+      {activeTab === 'wordpress_preview' && (
+        <FloatingWidget
+          guestInfo={guestInfo}
+          onOpenEmbedModal={() => setIsEmbedModalOpen(true)}
+          onOpenFullApp={() => handleTabChange('chat')}
+        />
+      )}
 
       {/* WordPress Embed Modal */}
       <WordPressEmbedModal
