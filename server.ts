@@ -58,7 +58,7 @@ async function startServer() {
   app.post('/api/admin/login', (req, res) => {
     const { password } = req.body;
     if (!password) {
-      return res.status(400).json({ error: 'Senha é obrigatória' });
+      return res.status(400).json({ error: 'Password is required' });
     }
 
     const inputPass = String(password).trim().toLowerCase();
@@ -74,7 +74,7 @@ async function startServer() {
       });
     }
     return res.status(401).json({ 
-      error: 'Senha incorreta. A senha padrão do painel é: concierge2025' 
+      error: 'Incorrect password. The default panel password is: concierge2025' 
     });
   });
 
@@ -84,7 +84,7 @@ async function startServer() {
       const config = dataStore.getAgentConfig();
       res.json(config);
     } catch (err: any) {
-      res.status(500).json({ error: err.message || 'Erro ao carregar configurações' });
+      res.status(500).json({ error: err.message || 'Error loading agent configuration' });
     }
   });
 
@@ -94,7 +94,7 @@ async function startServer() {
       const updated = dataStore.updateAgentConfig(updates);
       res.json(updated);
     } catch (err: any) {
-      res.status(500).json({ error: err.message || 'Erro ao salvar configurações' });
+      res.status(500).json({ error: err.message || 'Error saving agent configuration' });
     }
   });
 
@@ -103,7 +103,7 @@ async function startServer() {
       const reset = dataStore.resetAgentConfig();
       res.json(reset);
     } catch (err: any) {
-      res.status(500).json({ error: err.message || 'Erro ao redefinir configurações' });
+      res.status(500).json({ error: err.message || 'Error resetting agent configuration' });
     }
   });
 
@@ -114,7 +114,7 @@ async function startServer() {
       const items = dataStore.getKnowledgeItems(category as string, q as string);
       res.json(items);
     } catch (err: any) {
-      res.status(500).json({ error: err.message || 'Erro ao obter base de conhecimento' });
+      res.status(500).json({ error: err.message || 'Error fetching knowledge base' });
     }
   });
 
@@ -122,7 +122,7 @@ async function startServer() {
     try {
       const { title, category, content, tags, isActive, priority } = req.body;
       if (!title || !content || !category) {
-        return res.status(400).json({ error: 'Título, categoria e conteúdo são obrigatórios' });
+        return res.status(400).json({ error: 'Title, category, and content are required' });
       }
       const newItem = dataStore.addKnowledgeItem({
         title,
@@ -134,7 +134,7 @@ async function startServer() {
       });
       res.status(201).json(newItem);
     } catch (err: any) {
-      res.status(500).json({ error: err.message || 'Erro ao criar item na base de conhecimento' });
+      res.status(500).json({ error: err.message || 'Error creating knowledge base item' });
     }
   });
 
@@ -147,11 +147,11 @@ async function startServer() {
       }
       const updated = dataStore.updateKnowledgeItem(id, updates);
       if (!updated) {
-        return res.status(404).json({ error: 'Item não encontrado' });
+        return res.status(404).json({ error: 'Item not found' });
       }
       res.json(updated);
     } catch (err: any) {
-      res.status(500).json({ error: err.message || 'Erro ao atualizar item' });
+      res.status(500).json({ error: err.message || 'Error updating item' });
     }
   });
 
@@ -160,11 +160,11 @@ async function startServer() {
       const { id } = req.params;
       const deleted = dataStore.deleteKnowledgeItem(id);
       if (!deleted) {
-        return res.status(404).json({ error: 'Item não encontrado' });
+        return res.status(404).json({ error: 'Item not found' });
       }
-      res.json({ success: true, message: 'Item excluído com sucesso' });
+      res.json({ success: true, message: 'Item deleted successfully' });
     } catch (err: any) {
-      res.status(500).json({ error: err.message || 'Erro ao excluir item' });
+      res.status(500).json({ error: err.message || 'Error deleting item' });
     }
   });
 
@@ -173,7 +173,7 @@ async function startServer() {
       const items = dataStore.seedDefaultKnowledge();
       res.json({ success: true, items });
     } catch (err: any) {
-      res.status(500).json({ error: err.message || 'Erro ao restaurar base padrão' });
+      res.status(500).json({ error: err.message || 'Error restoring default knowledge base' });
     }
   });
 
@@ -184,7 +184,7 @@ async function startServer() {
       const logs = dataStore.getConversationSessions(q as string, sentiment as string);
       res.json(logs);
     } catch (err: any) {
-      res.status(500).json({ error: err.message || 'Erro ao obter logs de conversas' });
+      res.status(500).json({ error: err.message || 'Error fetching conversation logs' });
     }
   });
 
@@ -193,11 +193,11 @@ async function startServer() {
       const { id } = req.params;
       const log = dataStore.getConversationSession(id);
       if (!log) {
-        return res.status(404).json({ error: 'Conversa não encontrada' });
+        return res.status(404).json({ error: 'Conversation not found' });
       }
       res.json(log);
     } catch (err: any) {
-      res.status(500).json({ error: err.message || 'Erro ao obter conversa' });
+      res.status(500).json({ error: err.message || 'Error fetching conversation' });
     }
   });
 
@@ -206,11 +206,11 @@ async function startServer() {
       const { id } = req.params;
       const deleted = dataStore.deleteConversationSession(id);
       if (!deleted) {
-        return res.status(404).json({ error: 'Conversa não encontrada' });
+        return res.status(404).json({ error: 'Conversation not found' });
       }
-      res.json({ success: true, message: 'Registro de conversa removido' });
+      res.json({ success: true, message: 'Conversation record removed' });
     } catch (err: any) {
-      res.status(500).json({ error: err.message || 'Erro ao remover conversa' });
+      res.status(500).json({ error: err.message || 'Error deleting conversation' });
     }
   });
 
@@ -220,68 +220,68 @@ async function startServer() {
       const stats = dataStore.getAdminStats();
       res.json(stats);
     } catch (err: any) {
-      res.status(500).json({ error: err.message || 'Erro ao obter estatísticas' });
+      res.status(500).json({ error: err.message || 'Error fetching statistics' });
     }
   });
 
-  // 5. Intelligent AI Chat Endpoint (Server-Side Gemini Integration)
+  // 5. Intelligent AI Chat Endpoint (Server-Side Gemini Integration in English)
   app.post('/api/chat', async (req, res) => {
     try {
       const { message, sessionId, guestInfo, history, toneOverride } = req.body;
 
       if (!message || typeof message !== 'string') {
-        return res.status(400).json({ error: 'Mensagem é obrigatória' });
+        return res.status(400).json({ error: 'Message is required' });
       }
 
       const activeSessionId = sessionId || `session_${Date.now()}`;
-      const guestName = guestInfo?.name || 'Hóspede Estimado';
-      const guestRoom = guestInfo?.room || 'Suíte Privada';
+      const guestName = guestInfo?.name || 'VIP Guest';
+      const guestRoom = guestInfo?.room || 'Private Suite';
 
       // 1. Fetch current Agent Configuration & active Knowledge Base
       const config = dataStore.getAgentConfig();
       const activeKnowledge = config.enableKnowledgeBase ? dataStore.getActiveKnowledgeItems() : [];
 
-      // 2. Build tone instructions
+      // 2. Build tone instructions in English
       const selectedTone = toneOverride || config.tone;
       let toneInstructions = '';
       switch (selectedTone) {
         case 'luxury_classic':
-          toneInstructions = 'Tom: Altamente refinado, cerimonioso, impecavelmente cortês, usando vocabulário de alta hospitalidade francesa e internacional.';
+          toneInstructions = 'Tone: Exceptionally refined, ceremonial, impeccably courteous, utilizing aristocratic British & French luxury hospitality vernacular.';
           break;
         case 'modern_executive':
-          toneInstructions = 'Tom: Ágil, conciso, sofisticado, direto ao ponto, com foco em eficiência máxima e discrição.';
+          toneInstructions = 'Tone: Agile, concise, sophisticated, discreet, and focused on maximum efficiency and precision.';
           break;
         case 'sommelier':
-          toneInstructions = 'Tom: Elegante, apaixonado por alta enogastronomia, detalhando notas de prova, harmonizações perfeitas e safras raras.';
+          toneInstructions = 'Tone: Elegant, passionate about Haute Gastronomy, detailing tasting notes, rare vintages, and bespoke culinary pairings.';
           break;
         case 'resort_leisure':
-          toneInstructions = 'Tom: Acolhedor, relaxante, convidativo e caloroso, promovendo descanso absoluto e experiências memoráveis.';
+          toneInstructions = 'Tone: Warm, restorative, welcoming, inviting, and dedicated to serene relaxation and bespoke leisure.';
           break;
         default:
-          toneInstructions = 'Tom: Sofisticado e cortês.';
+          toneInstructions = 'Tone: Sophisticated, refined, and courteous.';
       }
 
-      // 3. Format Knowledge Base for Grounding
+      // 3. Format Knowledge Base for Grounding in English
       let knowledgeText = '';
       if (activeKnowledge.length > 0) {
-        knowledgeText = `\n\n### BASE DE CONHECIMENTO OFICIAL DO HOTEL (Use estas informações oficiais com prioridade):\n` +
+        knowledgeText = `\n\n### OFFICIAL HOTEL KNOWLEDGE BASE (Use this verified information with priority):\n` +
           activeKnowledge.map(k => `[${k.category.toUpperCase()}] ${k.title}:\n${k.content}\nTags: ${k.tags.join(', ')}`).join('\n\n');
       }
 
-      // 4. Assemble comprehensive System Instruction
+      // 4. Assemble comprehensive System Instruction in English
       const fullSystemInstruction = `${config.systemPrompt}
 
-Hotel Atual: ${config.hotelName}
-Nome do Hóspede Atual: ${guestName}
-Acomodação: ${guestRoom}
+Current Property: ${config.hotelName}
+Current Guest Name: ${guestName}
+Current Room / Suite: ${guestRoom}
 ${toneInstructions}
 ${knowledgeText}
 
-### REGRAS CRÍTICAS DE RESPOSTA:
-1. Responda em Português com elegância sublime (a menos que o usuário se comunique expressamente em outro idioma).
-2. Se o hóspede pedir para reservar uma mesa, agendar spa, solicitar transfer, chamar mordomo ou pedir room service, forneça a resposta refinada e sugira os próximos passos com clareza.
-3. Não quebre o personagem de Concierge de Alto Luxo sob nenhuma hipótese.
-4. Mantenha alta legibilidade, espaçamento refinado e evite respostas excessivamente longas ou prolixas quando uma resposta direta e polida for mais elegante.`;
+### CRITICAL BEHAVIORAL DIRECTIVES:
+1. **Language Requirement**: You MUST converse entirely in elegant, polished, and natural English at all times.
+2. **Actionable Hospitality**: If the guest requests a table reservation, spa appointment, chauffeur transfer, butler service, or in-suite dining, provide immediate, delightful solutions and confirm the details with utmost grace.
+3. **Impeccable Character**: Never break character as the Master Luxury Concierge.
+4. **Readability & Formatting**: Use tasteful markdown, paragraph spacing, and bullet points when presenting options or confirmation summaries.`;
 
       // 5. Construct conversation turns for Gemini
       const previousTurns: { role: 'user' | 'model'; parts: { text: string }[] }[] = [];
@@ -324,59 +324,59 @@ ${knowledgeText}
           },
         });
 
-        replyText = response.text || 'É uma honra atendê-lo. Como posso personalizar ainda mais sua experiência?';
+        replyText = response.text || `It is my distinct honor to assist you, ${guestName}. How may I further personalize your stay this evening?`;
       } catch (geminiError: any) {
         console.error('Gemini API Error:', geminiError);
-        // Fallback response if API key is missing or network glitch occurs
-        replyText = `Com o mais elevado prazer, ${guestName}. Recebi sua solicitação com prioridade. Nossa equipe de Concierge do ${config.hotelName} está à sua inteira disposição para coordenar cada detalhe com a máxima distinção e conforto.`;
+        // Fallback response in English if API key is missing or offline
+        replyText = `With the greatest pleasure, ${guestName}. I have received your request with priority. Our Concierge team at ${config.hotelName} is entirely at your disposal to coordinate every detail with the utmost distinction and comfort.`;
       }
 
-      // 8. Detect potential service actions and topics
+      // 8. Detect potential service actions and topics in English
       const actions: ServiceAction[] = [];
       const lowerReply = replyText.toLowerCase() + ' ' + message.toLowerCase();
 
-      if (lowerReply.includes('reserva') && (lowerReply.includes('miroir') || lowerReply.includes('restaurante') || lowerReply.includes('mesa'))) {
+      if (lowerReply.includes('reserva') || lowerReply.includes('table') || lowerReply.includes('dinner') || lowerReply.includes('le miroir') || lowerReply.includes('restaurant')) {
         actions.push({
           id: `act_${Date.now()}_1`,
           type: 'reservation',
-          title: 'Reserva no Restaurante Le Miroir',
-          description: 'Mesa gastronômica no restaurante 3 estrelas Michelin',
+          title: 'Table Reservation at Le Miroir',
+          description: 'Fine dining table at 3-Michelin-starred restaurant',
           status: 'pending',
-          details: { local: 'Le Miroir', status: 'Aguardando confirmação de horário' }
+          details: { venue: 'Le Miroir', status: 'Awaiting seating confirmation' }
         });
       }
 
-      if (lowerReply.includes('spa') || lowerReply.includes('massagem') || lowerReply.includes('élixir')) {
+      if (lowerReply.includes('spa') || lowerReply.includes('massage') || lowerReply.includes('élixir') || lowerReply.includes('ritual')) {
         actions.push({
           id: `act_${Date.now()}_2`,
           type: 'spa',
-          title: 'Agendamento no Spa L\'Élixir',
-          description: 'Tratamento de bem-estar e relaxamento VIP',
+          title: 'L\'Élixir Spa Appointment',
+          description: 'Signature restorative wellness therapy',
           status: 'pending',
-          details: { local: 'Spa L\'Élixir', servico: 'Ritual de Bem-estar' }
+          details: { sanctuary: 'L\'Élixir Spa', treatment: 'Royal Wellness Ritual' }
         });
       }
 
-      if (lowerReply.includes('transfer') || lowerReply.includes('aeroporto') || lowerReply.includes('maybach') || lowerReply.includes('heliponto')) {
+      if (lowerReply.includes('transfer') || lowerReply.includes('airport') || lowerReply.includes('maybach') || lowerReply.includes('chauffeur') || lowerReply.includes('helipad')) {
         actions.push({
           id: `act_${Date.now()}_3`,
           type: 'transfer',
-          title: 'Transfer Privativo Classe Executiva',
-          description: 'Veículo executivo com motorista bilíngue à disposição',
+          title: 'Private Chauffeur Transfer',
+          description: 'Executive vehicle with bilingual chauffeur at your service',
           status: 'pending',
-          details: { frota: 'Mercedes-Maybach Classe S', servico: 'Transfer VIP' }
+          details: { fleet: 'Mercedes-Maybach S-Class', service: 'VIP Airport Transfer' }
         });
       }
 
-      let detectedTopic = 'Atendimento Geral';
-      if (lowerReply.includes('restaurante') || lowerReply.includes('jantar') || lowerReply.includes('vinho') || lowerReply.includes('cardápio')) {
-        detectedTopic = 'Gastronomia & Vinhos';
-      } else if (lowerReply.includes('spa') || lowerReply.includes('massagem') || lowerReply.includes('piscina')) {
-        detectedTopic = 'Spa & Bem-estar';
-      } else if (lowerReply.includes('transfer') || lowerReply.includes('aeroporto') || lowerReply.includes('voo')) {
-        detectedTopic = 'Transporte VIP';
-      } else if (lowerReply.includes('suíte') || lowerReply.includes('quarto') || lowerReply.includes('check')) {
-        detectedTopic = 'Acomodação & Serviços';
+      let detectedTopic = 'General Concierge';
+      if (lowerReply.includes('restaurant') || lowerReply.includes('dinner') || lowerReply.includes('wine') || lowerReply.includes('menu') || lowerReply.includes('miroir')) {
+        detectedTopic = 'Fine Dining & Wine';
+      } else if (lowerReply.includes('spa') || lowerReply.includes('massage') || lowerReply.includes('pool') || lowerReply.includes('wellness')) {
+        detectedTopic = 'Spa & Wellness';
+      } else if (lowerReply.includes('transfer') || lowerReply.includes('airport') || lowerReply.includes('flight') || lowerReply.includes('maybach')) {
+        detectedTopic = 'Chauffeur & Transfers';
+      } else if (lowerReply.includes('suite') || lowerReply.includes('room') || lowerReply.includes('check') || lowerReply.includes('penthouse')) {
+        detectedTopic = 'Suites & Accommodations';
       }
 
       // 9. Record Assistant response in logs
@@ -405,7 +405,7 @@ ${knowledgeText}
       });
     } catch (err: any) {
       console.error('Server chat endpoint error:', err);
-      res.status(500).json({ error: err.message || 'Erro ao processar mensagem do concierge' });
+      res.status(500).json({ error: err.message || 'Error processing concierge message' });
     }
   });
 

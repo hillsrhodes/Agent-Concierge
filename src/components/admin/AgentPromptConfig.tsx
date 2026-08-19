@@ -20,7 +20,7 @@ export const AgentPromptConfig: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Playground / Live Testing State
-  const [testPrompt, setTestPrompt] = useState('Gostaria de uma recomendação de jantar romântico para hoje à noite.');
+  const [testPrompt, setTestPrompt] = useState('I would like a private table reservation for two at Le Miroir tonight at 8:30 PM.');
   const [testResponse, setTestResponse] = useState<string | null>(null);
   const [isTesting, setIsTesting] = useState(false);
 
@@ -34,7 +34,7 @@ export const AgentPromptConfig: React.FC = () => {
       const data = await api.getAgentConfig();
       setConfig(data);
     } catch (err: any) {
-      setErrorMessage(err.message || 'Erro ao carregar configurações');
+      setErrorMessage(err.message || 'Error loading agent configuration');
     } finally {
       setIsLoading(false);
     }
@@ -52,14 +52,14 @@ export const AgentPromptConfig: React.FC = () => {
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (err: any) {
-      setErrorMessage(err.message || 'Erro ao salvar alterações');
+      setErrorMessage(err.message || 'Error saving changes');
     } finally {
       setIsSaving(false);
     }
   };
 
   const handleReset = async () => {
-    if (!window.confirm('Tem certeza que deseja restaurar as instruções padrão? Suas edições atuais serão substituídas.')) {
+    if (!window.confirm('Are you sure you want to restore the default English prompt and settings? Current customizations will be replaced.')) {
       return;
     }
     setIsSaving(true);
@@ -69,7 +69,7 @@ export const AgentPromptConfig: React.FC = () => {
       setSaveSuccess(true);
       setTimeout(() => setSaveSuccess(false), 3000);
     } catch (err: any) {
-      setErrorMessage(err.message || 'Erro ao redefinir');
+      setErrorMessage(err.message || 'Error resetting configuration');
     } finally {
       setIsSaving(false);
     }
@@ -83,11 +83,11 @@ export const AgentPromptConfig: React.FC = () => {
     try {
       const res = await api.sendMessage({
         message: testPrompt,
-        guestInfo: { name: 'Hóspede Teste', room: 'Suíte 501' },
+        guestInfo: { name: 'VIP Test Guest', room: 'Suite 702' },
       });
       setTestResponse(res.reply);
     } catch (err: any) {
-      setTestResponse(`Erro no teste: ${err.message}`);
+      setTestResponse(`Test Error: ${err.message}`);
     } finally {
       setIsTesting(false);
     }
@@ -97,7 +97,7 @@ export const AgentPromptConfig: React.FC = () => {
     return (
       <div className="flex h-64 items-center justify-center text-zinc-500">
         <Sparkles className="h-5 w-5 text-zinc-900 animate-spin mr-2" />
-        <span>Carregando configurações do agente...</span>
+        <span>Loading Agent Configuration...</span>
       </div>
     );
   }
@@ -105,7 +105,7 @@ export const AgentPromptConfig: React.FC = () => {
   if (!config) {
     return (
       <div className="rounded-xl border border-rose-200 bg-rose-50 p-6 text-rose-700">
-        Não foi possível carregar as configurações do agente.
+        Failed to load agent configuration.
       </div>
     );
   }
@@ -117,10 +117,10 @@ export const AgentPromptConfig: React.FC = () => {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-zinc-200 pb-4">
         <div>
           <h2 className="text-lg font-bold tracking-tight text-zinc-900">
-            Configuração do Agente & System Prompt
+            Agent System Prompt & Instructions
           </h2>
           <p className="text-xs text-zinc-500 mt-0.5">
-            Defina a persona, etiqueta de atendimento e diretrizes para o modelo Gemini.
+            Configure the AI Concierge personality, English language etiquette, and Gemini parameters in real time.
           </p>
         </div>
 
@@ -129,10 +129,10 @@ export const AgentPromptConfig: React.FC = () => {
             onClick={handleReset}
             disabled={isSaving}
             className="flex items-center justify-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs font-semibold text-zinc-700 hover:bg-zinc-50 transition-colors cursor-pointer"
-            title="Restaurar padrão"
+            title="Restore default English prompt"
           >
             <RotateCcw className="h-3.5 w-3.5" />
-            <span>Restaurar</span>
+            <span>Restore Defaults</span>
           </button>
 
           <button
@@ -142,16 +142,16 @@ export const AgentPromptConfig: React.FC = () => {
             className="flex flex-1 sm:flex-initial items-center justify-center gap-1.5 rounded-lg bg-zinc-900 px-4 py-2 text-xs font-semibold text-white hover:bg-zinc-800 shadow-xs transition-all disabled:opacity-50 cursor-pointer"
           >
             {isSaving ? (
-              <span>Salvando...</span>
+              <span>Saving...</span>
             ) : saveSuccess ? (
               <>
                 <Check className="h-3.5 w-3.5" />
-                <span>Salvo com Sucesso!</span>
+                <span>Saved Successfully!</span>
               </>
             ) : (
               <>
                 <Save className="h-3.5 w-3.5" />
-                <span>Salvar Alterações</span>
+                <span>Save Changes</span>
               </>
             )}
           </button>
@@ -162,7 +162,7 @@ export const AgentPromptConfig: React.FC = () => {
       {saveSuccess && (
         <div className="flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 p-3.5 text-xs text-emerald-800">
           <Check className="h-4 w-4 text-emerald-600 shrink-0" />
-          <span>Configurações atualizadas e injetadas no Gemini em tempo real!</span>
+          <span>System prompt and parameters updated and applied to the Gemini AI in real time!</span>
         </div>
       )}
 
@@ -184,14 +184,14 @@ export const AgentPromptConfig: React.FC = () => {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-400">
-                  System Prompt do Concierge
+                  Concierge System Prompt (English)
                 </h3>
                 <p className="text-xs text-zinc-500 mt-0.5">
-                  Estas instruções governam o comportamento e o tom da IA
+                  These instructions govern the AI character, luxury etiquette, and tone
                 </p>
               </div>
               <span className="text-[11px] font-mono text-zinc-400">
-                {config.systemPrompt.length} caracteres
+                {config.systemPrompt.length} characters
               </span>
             </div>
 
@@ -201,15 +201,15 @@ export const AgentPromptConfig: React.FC = () => {
               value={config.systemPrompt}
               onChange={e => setConfig({ ...config, systemPrompt: e.target.value })}
               className="w-full rounded-xl border border-zinc-200 bg-zinc-50/50 p-4 font-mono text-xs text-zinc-800 leading-relaxed placeholder-zinc-400 focus:border-zinc-900 focus:outline-none focus:ring-1 focus:ring-zinc-900"
-              placeholder="Digite o system prompt do concierge..."
+              placeholder="Enter system prompt for concierge..."
             />
 
             <div className="rounded-xl bg-zinc-50 border border-zinc-200 p-3.5 text-[11px] text-zinc-600 space-y-1">
-              <p className="font-semibold text-zinc-800">Diretrizes de Prompting:</p>
+              <p className="font-semibold text-zinc-800">Prompting Guidelines:</p>
               <ul className="list-disc list-inside space-y-0.5 text-zinc-500">
-                <li>Estabeleça o nível de cortesia e regras de atendimento.</li>
-                <li>Instrua como estruturar recomendações e reservas.</li>
-                <li>A Base de Conhecimento ativa é indexada automaticamente em cada consulta.</li>
+                <li>Enforce English hospitality demeanor, courtesy, and proactive coordination.</li>
+                <li>Guide the agent on structured confirmations for dining, spa, and chauffeur transfers.</li>
+                <li>Active Knowledge Base items are automatically grounded in every query.</li>
               </ul>
             </div>
 
@@ -218,10 +218,10 @@ export const AgentPromptConfig: React.FC = () => {
           {/* Welcome Message Editor */}
           <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-2">
             <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-400">
-              Mensagem de Boas-Vindas Inicial
+              Default Initial Welcome Message
             </h3>
             <p className="text-xs text-zinc-500">
-              Primeira mensagem apresentada ao abrir a conversa
+              First greeting displayed to the guest upon opening the chat
             </p>
             <input
               type="text"
@@ -240,12 +240,12 @@ export const AgentPromptConfig: React.FC = () => {
           <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-400 flex items-center gap-1.5">
               <Sliders className="h-3.5 w-3.5" />
-              Parâmetros do Modelo
+              Model Parameters
             </h3>
 
             {/* Hotel Name */}
             <div>
-              <label className="text-xs font-semibold text-zinc-700">Nome do Estabelecimento</label>
+              <label className="text-xs font-semibold text-zinc-700">Hotel / Property Name</label>
               <input
                 type="text"
                 value={config.hotelName}
@@ -256,23 +256,23 @@ export const AgentPromptConfig: React.FC = () => {
 
             {/* Persona Tone Default */}
             <div>
-              <label className="text-xs font-semibold text-zinc-700">Tom de Atendimento Padrão</label>
+              <label className="text-xs font-semibold text-zinc-700">Default Service Tone</label>
               <select
                 value={config.tone}
                 onChange={e => setConfig({ ...config, tone: e.target.value as ConciergeTone })}
                 className="mt-1.5 w-full rounded-xl border border-zinc-200 bg-zinc-50/50 px-3 py-2 text-xs text-zinc-800 focus:border-zinc-900 focus:outline-none cursor-pointer"
               >
-                <option value="luxury_classic">Clássico & Formal</option>
-                <option value="modern_executive">Executivo & Ágil</option>
+                <option value="luxury_classic">Classic & Formal</option>
+                <option value="modern_executive">Executive & Concise</option>
                 <option value="sommelier">Sommelier</option>
-                <option value="resort_leisure">Resort & Relaxamento</option>
+                <option value="resort_leisure">Resort & Relaxation</option>
               </select>
             </div>
 
             {/* Temperature Slider */}
             <div>
               <div className="flex items-center justify-between text-xs">
-                <span className="font-semibold text-zinc-700">Temperatura (Criatividade)</span>
+                <span className="font-semibold text-zinc-700">Temperature (Creativity)</span>
                 <span className="font-mono text-zinc-900 font-bold">{config.temperature}</span>
               </div>
               <input
@@ -282,12 +282,12 @@ export const AgentPromptConfig: React.FC = () => {
                 step="0.05"
                 value={config.temperature}
                 onChange={e => setConfig({ ...config, temperature: parseFloat(e.target.value) })}
-                className="mt-2 w-full accent-zinc-900"
+                className="mt-2 w-full accent-zinc-900 cursor-pointer"
               />
               <div className="mt-1 flex justify-between text-[10px] text-zinc-400">
-                <span>0.0 (Fiel)</span>
-                <span>0.7 (Recomendado)</span>
-                <span>1.0 (Criativo)</span>
+                <span>0.0 (Strict)</span>
+                <span>0.7 (Balanced)</span>
+                <span>1.0 (Creative)</span>
               </div>
             </div>
 
@@ -295,8 +295,8 @@ export const AgentPromptConfig: React.FC = () => {
             <div className="pt-3 border-t border-zinc-100">
               <label className="flex items-center justify-between cursor-pointer">
                 <div>
-                  <span className="text-xs font-semibold text-zinc-800">Injetar Base de Conhecimento</span>
-                  <p className="text-[10px] text-zinc-400">Anexa dados cadastrados ao contexto do chat</p>
+                  <span className="text-xs font-semibold text-zinc-800">Ground with Knowledge Base</span>
+                  <p className="text-[10px] text-zinc-400">Injects verified hotel amenities into AI context</p>
                 </div>
                 <input
                   type="checkbox"
@@ -313,10 +313,10 @@ export const AgentPromptConfig: React.FC = () => {
           <div className="rounded-2xl border border-zinc-200 bg-zinc-50/50 p-6 shadow-xs space-y-3">
             <h3 className="text-xs font-bold uppercase tracking-widest text-zinc-400 flex items-center gap-1.5">
               <Play className="h-3.5 w-3.5" />
-              Testador ao Vivo
+              Live English Playground
             </h3>
             <p className="text-xs text-zinc-500">
-              Envie uma pergunta para testar a resposta do modelo com os parâmetros configurados.
+              Send a test message to preview the concierge's English response with real grounding.
             </p>
 
             <div className="space-y-2">
@@ -324,7 +324,7 @@ export const AgentPromptConfig: React.FC = () => {
                 type="text"
                 value={testPrompt}
                 onChange={e => setTestPrompt(e.target.value)}
-                placeholder="Digite uma pergunta de teste..."
+                placeholder="Type a test guest inquiry..."
                 className="w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-800 focus:border-zinc-900 focus:outline-none"
               />
 
@@ -336,12 +336,12 @@ export const AgentPromptConfig: React.FC = () => {
                 {isTesting ? (
                   <>
                     <Sparkles className="h-3.5 w-3.5 animate-spin" />
-                    <span>Processando...</span>
+                    <span>Curating Response...</span>
                   </>
                 ) : (
                   <>
                     <Send className="h-3.5 w-3.5" />
-                    <span>Executar Teste</span>
+                    <span>Run Live Test</span>
                   </>
                 )}
               </button>
@@ -350,7 +350,7 @@ export const AgentPromptConfig: React.FC = () => {
             {testResponse && (
               <div className="mt-3 rounded-xl border border-zinc-200 bg-white p-3.5 text-xs leading-relaxed text-zinc-700">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1">
-                  Resposta do Gemini:
+                  Gemini Response:
                 </span>
                 <div className="whitespace-pre-wrap">{testResponse}</div>
               </div>

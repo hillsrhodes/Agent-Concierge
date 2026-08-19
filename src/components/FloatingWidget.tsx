@@ -9,10 +9,10 @@ import {
   Check, 
   Copy, 
   Sparkles, 
-  ChevronRight,
-  CheckCircle2,
-  ExternalLink,
-  Code2
+  ChevronRight, 
+  CheckCircle2, 
+  ExternalLink, 
+  Code2 
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChatMessage, ServiceAction } from '../types';
@@ -42,7 +42,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
     {
       id: 'w_welcome',
       role: 'assistant',
-      content: `Olá! Sou o Concierge Digital do The Grand Lumière. Como posso auxiliá-lo com reservas, informações ou serviços exclusivos agora?`,
+      content: `Welcome to The Grand Lumière. I am your Digital Concierge. How may I assist you with private reservations, spa treatments, or bespoke hotel services today?`,
       timestamp: new Date().toISOString(),
     },
   ]);
@@ -100,7 +100,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
       const errorMsg: ChatMessage = {
         id: `w_err_${Date.now()}`,
         role: 'assistant',
-        content: 'Desculpe, tive uma instabilidade momentânea. Por favor, tente novamente.',
+        content: 'Apologies, there was a momentary network interruption. Please try again in a moment.',
         timestamp: new Date().toISOString(),
       };
       setMessages(prev => [...prev, errorMsg]);
@@ -120,7 +120,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
     const confirmNote: ChatMessage = {
       id: `w_conf_${Date.now()}`,
       role: 'assistant',
-      content: `Solicitação para "${action.title}" confirmada com sucesso!`,
+      content: `Request for "${action.title}" confirmed with distinction!`,
       timestamp: new Date().toISOString(),
     };
     setMessages(prev => [...prev, confirmNote]);
@@ -161,22 +161,22 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
               <div className="flex items-center space-x-1">
                 <button
                   onClick={onOpenEmbedModal}
-                  className="rounded-lg p-1 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors"
-                  title="Código para WordPress"
+                  className="rounded-lg p-1 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors cursor-pointer"
+                  title="WordPress Integration Snippets"
                 >
                   <Code2 className="h-3.5 w-3.5" />
                 </button>
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="rounded-lg p-1 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors"
-                  title={isExpanded ? 'Reduzir' : 'Expandir'}
+                  className="rounded-lg p-1 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors cursor-pointer"
+                  title={isExpanded ? 'Minimize' : 'Expand'}
                 >
                   {isExpanded ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="rounded-lg p-1 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors"
-                  title="Fechar widget"
+                  className="rounded-lg p-1 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors cursor-pointer"
+                  title="Close widget"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -185,24 +185,24 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
 
             {/* Quick Prompt Pills in Widget Header */}
             <div className="border-b border-zinc-100 bg-zinc-50 px-3 py-2 flex items-center gap-1.5 overflow-x-auto text-[11px]">
-              <span className="text-zinc-400 font-medium text-[10px] whitespace-nowrap">Sugestões:</span>
+              <span className="text-zinc-400 font-medium text-[10px] whitespace-nowrap">Requests:</span>
               <button
-                onClick={() => handleSendMessage('Reservar mesa no Le Miroir para hoje')}
-                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-zinc-900 transition-colors"
+                onClick={() => handleSendMessage('Reserve table at Le Miroir tonight')}
+                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-zinc-900 transition-colors cursor-pointer"
               >
-                🍽️ Le Miroir
+                🍽️ Le Miroir Table
               </button>
               <button
-                onClick={() => handleSendMessage('Quais os tratamentos do Spa L\'Élixir?')}
-                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-zinc-900 transition-colors"
+                onClick={() => handleSendMessage('Tell me about the 24k Gold Spa Ritual')}
+                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-zinc-900 transition-colors cursor-pointer"
               >
-                💆 Spa 24k
+                💆 24k Gold Spa
               </button>
               <button
-                onClick={() => handleSendMessage('Transfer com motorista privativo')}
-                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-zinc-900 transition-colors"
+                onClick={() => handleSendMessage('Arrange private Maybach chauffeur transfer')}
+                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-zinc-900 transition-colors cursor-pointer"
               >
-                🚗 Transfer
+                🚗 Maybach Transfer
               </button>
             </div>
 
@@ -246,17 +246,17 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
                                   className={`w-full flex items-center justify-center gap-1 rounded px-2 py-1 text-[10px] font-semibold transition-all ${
                                     isConfirmed
                                       ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/40'
-                                      : 'bg-white text-zinc-900 hover:bg-zinc-100'
+                                      : 'bg-white text-zinc-900 hover:bg-zinc-100 cursor-pointer'
                                   }`}
                                 >
                                   {isConfirmed ? (
                                     <>
                                       <CheckCircle2 className="h-3 w-3 text-emerald-400" />
-                                      <span>Confirmado</span>
+                                      <span>Confirmed</span>
                                     </>
                                   ) : (
                                     <>
-                                      <span>Confirmar Solicitação</span>
+                                      <span>Confirm Request</span>
                                       <ChevronRight className="h-3 w-3" />
                                     </>
                                   )}
@@ -271,7 +271,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
                       {isAssistant && (
                         <button
                           onClick={() => handleCopy(msg.id, msg.content)}
-                          className="absolute -top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded bg-zinc-800 p-1 text-zinc-400 hover:text-white"
+                          className="absolute -top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity rounded bg-zinc-800 p-1 text-zinc-400 hover:text-white cursor-pointer"
                         >
                           {isCopied ? <Check className="h-2.5 w-2.5 text-emerald-400" /> : <Copy className="h-2.5 w-2.5" />}
                         </button>
@@ -288,7 +288,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
               {isLoading && (
                 <div className="flex items-center space-x-2 text-zinc-500 text-[11px]">
                   <Bot className="h-3.5 w-3.5 animate-pulse text-zinc-900" />
-                  <span>Concierge formulando resposta...</span>
+                  <span>Concierge is curating your response...</span>
                 </div>
               )}
 
@@ -309,13 +309,13 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
                   type="text"
                   value={inputMessage}
                   onChange={e => setInputMessage(e.target.value)}
-                  placeholder="Escreva sua solicitação..."
+                  placeholder="Type your request to Concierge..."
                   className="flex-1 rounded-xl border border-zinc-200 bg-zinc-50 px-3.5 py-2 text-xs text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:bg-white focus:outline-none"
                 />
                 <button
                   type="submit"
                   disabled={!inputMessage.trim() || isLoading}
-                  className="flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-900 text-white hover:bg-zinc-800 disabled:opacity-40 transition-colors"
+                  className="flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-900 text-white hover:bg-zinc-800 disabled:opacity-40 transition-colors cursor-pointer"
                 >
                   <Send className="h-3.5 w-3.5" />
                 </button>
@@ -325,9 +325,9 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
                 <span>The Grand Lumière</span>
                 <button
                   onClick={onOpenFullApp}
-                  className="text-zinc-600 hover:text-zinc-900 font-semibold flex items-center gap-0.5"
+                  className="text-zinc-600 hover:text-zinc-900 font-semibold flex items-center gap-0.5 cursor-pointer"
                 >
-                  <span>Abrir em Tela Cheia</span>
+                  <span>Open Full View</span>
                   <ExternalLink className="h-2.5 w-2.5" />
                 </button>
               </div>
@@ -351,8 +351,8 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
         </div>
 
         <div className="hidden sm:flex flex-col text-left pr-1">
-          <span className="text-xs font-bold leading-tight tracking-tight">Concierge VIP</span>
-          <span className="text-[10px] text-zinc-400 leading-none">Fale Conosco Online</span>
+          <span className="text-xs font-bold leading-tight tracking-tight">VIP Concierge</span>
+          <span className="text-[10px] text-zinc-400 leading-none">24/7 Digital Service</span>
         </div>
 
         {/* Unread dot */}

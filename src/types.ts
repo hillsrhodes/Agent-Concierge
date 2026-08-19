@@ -38,7 +38,7 @@ export interface AgentConfig {
   tone: ConciergeTone;
   temperature: number;
   welcomeMessage: string;
-  language: 'pt-BR' | 'en' | 'fr' | 'es' | 'auto';
+  language: 'pt-BR' | 'en' | 'en-US' | 'fr' | 'es' | 'auto';
   hotelName: string;
   enableKnowledgeBase: boolean;
   updatedAt: string;

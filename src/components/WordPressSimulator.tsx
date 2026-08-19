@@ -10,7 +10,8 @@ import {
   Mail, 
   Compass,
   ArrowRight,
-  ShieldCheck
+  ShieldCheck,
+  Car
 } from 'lucide-react';
 
 interface WordPressSimulatorProps {
@@ -29,22 +30,22 @@ export const WordPressSimulator: React.FC<WordPressSimulatorProps> = ({
       <div className="sticky top-16 z-30 flex items-center justify-between border-b border-zinc-200 bg-zinc-900 px-4 py-2 text-xs text-white shadow-md">
         <div className="flex items-center space-x-2">
           <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="font-semibold">Simulação de Site WordPress:</span>
-          <span className="text-zinc-400 hidden sm:inline">The Grand Lumière Hotel & Spa (Tema Luxury)</span>
+          <span className="font-semibold">WordPress Website Live Simulation:</span>
+          <span className="text-zinc-400 hidden sm:inline">The Grand Lumière Hotel & Residences (Luxury Theme)</span>
         </div>
 
         <div className="flex items-center space-x-2">
           <button
             onClick={onOpenEmbedModal}
-            className="rounded-md bg-white/10 px-2.5 py-1 font-semibold text-white hover:bg-white/20 transition-colors"
+            className="rounded-md bg-white/10 px-2.5 py-1 font-semibold text-white hover:bg-white/20 transition-colors cursor-pointer"
           >
-            Obter Código WP
+            Get WP Snippets
           </button>
           <button
             onClick={onExitPreview}
-            className="rounded-md bg-white text-zinc-900 px-2.5 py-1 font-semibold hover:bg-zinc-100 transition-colors"
+            className="rounded-md bg-white text-zinc-900 px-2.5 py-1 font-semibold hover:bg-zinc-100 transition-colors cursor-pointer"
           >
-            Voltar ao Chat
+            Return to Concierge Chat
           </button>
         </div>
       </div>
@@ -57,23 +58,23 @@ export const WordPressSimulator: React.FC<WordPressSimulatorProps> = ({
           <div className="relative z-10 max-w-2xl space-y-4">
             <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-zinc-400">
               <Star className="h-3.5 w-3.5 text-zinc-400 fill-zinc-400" />
-              <span>5 Estrelas Luxo & Gastronomia</span>
+              <span>5-Star Ultra Luxury & Haute Gastronomy</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
-              Uma Experiência Imersiva em Hospitalidade
+              An Immersive Legacy in Luxury Hospitality
             </h1>
             <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-              Bem-vindo ao The Grand Lumière. Desfrute de alta gastronomia com 3 estrelas Michelin, tratamentos de spa com ouro 24k e serviço de concierge com inteligência artificial disponível 24 horas.
+              Welcome to The Grand Lumière. Experience 3-Michelin-starred dining, bespoke 24k gold spa rituals, and our 24/7 AI-powered Master Concierge grounded in the hotel's verified knowledge base.
             </p>
             <div className="pt-2 flex flex-wrap gap-3">
-              <button className="rounded-xl bg-white text-zinc-900 px-5 py-2.5 text-xs font-bold hover:bg-zinc-100 transition-all shadow-xs">
-                Reservar Acomodação
+              <button className="rounded-xl bg-white text-zinc-900 px-5 py-2.5 text-xs font-bold hover:bg-zinc-100 transition-all shadow-xs cursor-pointer">
+                Reserve a Suite
               </button>
               <button 
                 onClick={onOpenEmbedModal}
-                className="rounded-xl border border-zinc-700 bg-zinc-800/80 text-zinc-300 px-4 py-2.5 text-xs font-semibold hover:text-white hover:bg-zinc-700 transition-all"
+                className="rounded-xl border border-zinc-700 bg-zinc-800/80 text-zinc-300 px-4 py-2.5 text-xs font-semibold hover:text-white hover:bg-zinc-700 transition-all cursor-pointer"
               >
-                Instalar no Meu WordPress
+                Install on WordPress
               </button>
             </div>
           </div>
@@ -86,9 +87,9 @@ export const WordPressSimulator: React.FC<WordPressSimulatorProps> = ({
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-900">
               <Utensils className="h-5 w-5" />
             </div>
-            <h3 className="text-base font-bold text-zinc-900">Restaurante Le Miroir</h3>
+            <h3 className="text-base font-bold text-zinc-900">Le Miroir Restaurant (3★ Michelin)</h3>
             <p className="text-xs text-zinc-600 leading-relaxed">
-              Alta gastronomia francesa contemporânea comandada pelo renomado Chef Antoine Dubois. Menu degustação em 7 tempos harmonizado.
+              Contemporary French Haute Cuisine helmed by Executive Chef Antoine Laurent with an 8-course tasting menu and Grand Cru pairings.
             </p>
           </div>
 
@@ -96,19 +97,19 @@ export const WordPressSimulator: React.FC<WordPressSimulatorProps> = ({
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-900">
               <Sparkles className="h-5 w-5" />
             </div>
-            <h3 className="text-base font-bold text-zinc-900">Spa L'Élixir & Bem-Estar</h3>
+            <h3 className="text-base font-bold text-zinc-900">L'Élixir Spa & Wellness</h3>
             <p className="text-xs text-zinc-600 leading-relaxed">
-              Tratamentos exclusivos com infusão de ouro 24k, sauna finlandesa, piscina aquecida de borda infinita e hidroterapia.
+              Signature 24k Royal Gold restorative rituals, Swiss Valmont therapies, dry Finnish saunas, and ozone heated infinity pool.
             </p>
           </div>
 
           <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-900 text-white">
-              <ShieldCheck className="h-5 w-5" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-900">
+              <Car className="h-5 w-5" />
             </div>
-            <h3 className="text-base font-bold text-zinc-900">Concierge IA no Canto da Tela</h3>
+            <h3 className="text-base font-bold text-zinc-900">Mercedes-Maybach & Helipad</h3>
             <p className="text-xs text-zinc-600 leading-relaxed">
-              Clique no <strong>ícone flutuante no canto inferior direito</strong> desta tela para testar como seus clientes interagirão no seu site real!
+              Private executive chauffeur fleet, 24/7 certified rooftop helipad, and bespoke Azimut 68-foot coastal yacht charter.
             </p>
           </div>
         </section>
@@ -117,17 +118,17 @@ export const WordPressSimulator: React.FC<WordPressSimulatorProps> = ({
         <section className="rounded-2xl border border-zinc-200 bg-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xs">
           <div className="space-y-1 text-left">
             <h4 className="text-base font-bold text-zinc-900">
-              Pronto para ativar no seu site WordPress?
+              Test the Floating Concierge in the bottom right corner
             </h4>
             <p className="text-xs text-zinc-500">
-              Basta copiar o script gerado e colar no seu plugin de cabeçalho/rodapé ou no Elementor.
+              Click the widget button to chat in English and verify real-time knowledge base retrieval and table reservations.
             </p>
           </div>
           <button
             onClick={onOpenEmbedModal}
             className="flex items-center gap-2 rounded-xl bg-zinc-900 px-4 py-2.5 text-xs font-bold text-white hover:bg-zinc-800 shadow-xs cursor-pointer shrink-0"
           >
-            <span>Ver Instruções do WordPress</span>
+            <span>WordPress Integration Snippets</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </button>
         </section>

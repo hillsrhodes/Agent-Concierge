@@ -1,14 +1,14 @@
 import { AgentConfig, KnowledgeItem, ConversationSession, AdminStats, ChatMessage } from '../types.js';
 
-export const DEFAULT_SYSTEM_PROMPT = `Você é o "Agent Concierge", o Concierge Master de Alto Luxo do renomado "The Grand Lumière Hotel & Residences".
-Sua missão é proporcionar um atendimento impecável, hiper-personalizado, polido, sofisticado e memorável para hóspedes VIP e membros da alta sociedade.
+export const DEFAULT_SYSTEM_PROMPT = `You are "Agent Concierge", the Master Luxury Concierge of the prestigious "The Grand Lumière Hotel & Residences".
+Your mission is to provide an immaculate, hyper-personalized, polished, sophisticated, and memorable service for VIP guests, dignitaries, and discerning travelers.
 
-### Diretrizes de Personalidade e Etiqueta:
-1. **Tom e Postura**: Seja extremamente cortês, refinado, atento e proativo. Trate o hóspede sempre com elegância e respeito (ex: "É uma honra atendê-lo", "Permita-me cuidar de cada detalhe com a máxima precisão").
-2. **Resolução Imediata**: Apresente soluções claras, refinadas e práticas. Se o hóspede pedir uma recomendação ou reserva, elabore sugestões de alto padrão, horários convenientes e serviços complementares (ex: transfer, harmonização de vinhos, preparação da suíte).
-3. **Base de Conhecimento**: Utilize as informações da Base de Conhecimento do hotel com absoluta fidelidade. Se questionado sobre horários, cardápios, tratamentos de spa ou serviços exclusivos, cite os detalhes oficiais.
-4. **Estrutura de Resposta**: Mantenha respostas elegantes e fluidas, utilizando formatação clara quando listar opções ou itinerários. Ao final de sugestões ou reservas, ofereça-se para coordenar todos os arranjos necessários.
-5. **Ações Sugeridas**: Quando apropriado, sugira ações concretas como confirmação de mesa, agendamento de massagem, serviço de mordomo ou solicitação de transfer privativo.`;
+### Personality & Etiquette Guidelines:
+1. **Tone and Demeanor**: Maintain an exceptionally courteous, refined, proactive, and attentive tone. Address the guest with utmost respect and poise (e.g., "It is my distinct pleasure to assist you, Sir/Madam", "Allow me to curate every detail with consummate precision").
+2. **Immediate Resolution & Bespoke Curation**: Provide actionable, refined, and exquisite suggestions. When a guest requests dining, spa, chauffeur, or room services, suggest premium options, convenient times, and tasteful enhancements (e.g., private car pickup, rare vintage wine pairings, suite preparations).
+3. **Knowledge Base Grounding**: Utilize the official hotel Knowledge Base with absolute fidelity. Quote official schedules, Michelin-starred menus, spa signature rituals, and private fleet availability accurately.
+4. **Response Structure**: Format responses gracefully with clean typography, bullet points for itineraries, and clear confirmation details. Always conclude by graciously offering to coordinate all necessary arrangements.
+5. **Language**: Respond fluently, naturally, and exclusively in English with aristocratic hospitality elegance.`;
 
 export const DEFAULT_AGENT_CONFIG: AgentConfig = {
   id: 'config_primary',
@@ -17,8 +17,8 @@ export const DEFAULT_AGENT_CONFIG: AgentConfig = {
   systemPrompt: DEFAULT_SYSTEM_PROMPT,
   tone: 'luxury_classic',
   temperature: 0.7,
-  welcomeMessage: 'Bem-vindo ao The Grand Lumière. Sou seu Concierge Pessoal. Como posso tornar sua estada extraordinária hoje?',
-  language: 'pt-BR',
+  welcomeMessage: 'Welcome to The Grand Lumière Hotel & Residences. I am your Personal Digital Concierge. How may I curate an extraordinary stay for you today?',
+  language: 'en-US',
   hotelName: 'The Grand Lumière Hotel & Residences',
   enableKnowledgeBase: true,
   updatedAt: new Date().toISOString(),
@@ -27,10 +27,10 @@ export const DEFAULT_AGENT_CONFIG: AgentConfig = {
 export const INITIAL_KNOWLEDGE_ITEMS: KnowledgeItem[] = [
   {
     id: 'kb_1',
-    title: 'Restaurante Le Miroir (3 Estrelas Michelin)',
+    title: 'Le Miroir Restaurant (3 Michelin Stars)',
     category: 'gastronomy',
-    content: 'Comandado pelo Chef Executivo Antoine Laurent, o Le Miroir oferece culinária francesa contemporânea com ingredientes orgânicos sazonais. Menu degustação de 8 tempos (R$ 980 por pessoa com harmonização de vinhos Grand Cru opcional). Horário de jantar: 19h30 às 23h30 (terça a domingo). Dress code: Elegante / Esporte Fino. Reservas exigem antecedência mínima de 24h para mesas na varanda panorâmica.',
-    tags: ['restaurante', 'michelin', 'jantar', 'gastronomia', 'reserva'],
+    content: 'Helmed by Executive Chef Antoine Laurent, Le Miroir delivers contemporary French Haute Cuisine crafted from seasonal organic ingredients. Features an 8-course Signature Tasting Menu ($280 / €260 per guest, optional Grand Cru Wine Pairing available). Dinner service: 7:30 PM to 11:30 PM (Tuesday to Sunday). Dress Code: Elegant Evening Attire / Black Tie Optional. Reservations require a minimum of 24 hours advance notice for Panoramic Terrace tables.',
+    tags: ['restaurant', 'michelin', 'fine dining', 'dinner', 'reservation', 'wine pairing'],
     isActive: true,
     priority: 'high',
     createdAt: new Date(Date.now() - 86400000 * 5).toISOString(),
@@ -38,10 +38,10 @@ export const INITIAL_KNOWLEDGE_ITEMS: KnowledgeItem[] = [
   },
   {
     id: 'kb_2',
-    title: 'Spa L\'Élixir & Centro de Bem-Estar',
+    title: 'L\'Élixir Spa & Holistic Wellness Sanctuary',
     category: 'spa',
-    content: 'O Spa L\'Élixir conta com tratamentos exclusivos da marca suíça Valmont, piscina aquecida de borda infinita com ozônio, saunas seca e a vapor, e cabines privativas para casais. Tratamento assinatura: "Ritual D\'Or 24k" (massagem relaxante de 90 min + esfoliação com pó de diamante e ouro). Horário: 07h00 às 22h00 diariamente. Agendamento com o Concierge inclui taça de champanhe Dom Pérignon de boas-vindas.',
-    tags: ['spa', 'massagem', 'piscina', 'bem-estar', 'relaxamento'],
+    content: 'L\'Élixir Spa features signature therapies by Swiss luxury skincare house Valmont, an ozone-treated indoor infinity heated pool, dry Finnish saunas, Turkish hammams, and private couple treatment suites. Signature Treatment: "The 24k Royal Gold Ritual" (90-minute restorative hot-stone massage + micro-exfoliation with diamond powder and 24k gold leaf). Operating hours: 7:00 AM to 10:00 PM daily. Concierge bookings include a chilled glass of Dom Pérignon vintage champagne upon arrival.',
+    tags: ['spa', 'massage', 'wellness', 'gold ritual', 'infinity pool', 'sauna', 'hammam'],
     isActive: true,
     priority: 'high',
     createdAt: new Date(Date.now() - 86400000 * 4).toISOString(),
@@ -49,10 +49,10 @@ export const INITIAL_KNOWLEDGE_ITEMS: KnowledgeItem[] = [
   },
   {
     id: 'kb_3',
-    title: 'Serviço de Transfer Privativo, Heliponto & Frota',
+    title: 'Private Chauffeur Fleet, Helipad & Yacht Charter',
     category: 'transport',
-    content: 'Disponibilizamos frota própria com Mercedes-Maybach Classe S, Rolls-Royce Phantom e Range Rover Autobiography com motorista bilíngue e segurança discreta. Heliponto homologado no rooftop disponível para pousos 24 horas (prefixo ICAO SJGL). Também oferecemos fretamento de iate Azimut 68 pés para passeios ao pôr do sol pela baía.',
-    tags: ['transfer', 'heliponto', 'rolls royce', 'iate', 'transporte', 'aeroporto'],
+    content: 'Our private chauffeur fleet features the latest Mercedes-Maybach S-Class, Rolls-Royce Phantom, and Range Rover Autobiography, all piloted by bilingual executive security drivers. Certified rooftop Helipad available 24/7 for helicopter transfers (ICAO code: SJGL). We also offer private sunset cruises aboard our customized Azimut 68-foot yacht with champagne service along the coast.',
+    tags: ['transfer', 'chauffeur', 'maybach', 'rolls royce', 'helipad', 'yacht', 'airport transfer'],
     isActive: true,
     priority: 'high',
     createdAt: new Date(Date.now() - 86400000 * 3).toISOString(),
@@ -60,10 +60,10 @@ export const INITIAL_KNOWLEDGE_ITEMS: KnowledgeItem[] = [
   },
   {
     id: 'kb_4',
-    title: 'Suíte Imperial & Cobertura Presidencial',
+    title: 'The Imperial Suite & Presidential Penthouse',
     category: 'suites',
-    content: 'A Suíte Imperial (420m²) conta com vista de 360 graus, piano de cauda Steinway & Sons, adega climatizada privativa com 120 rótulos raros, banheira de imersão esculpida em mármore de Carrara e serviço de Mordomo Privativo 24 horas por dia. Inclui check-in e check-out VIP in-suite e amenities Hermès Paris.',
-    tags: ['suite', 'quarto', 'imperial', 'presidencial', 'mordomo'],
+    content: 'The Imperial Penthouse Suite (4,500 sq ft / 420 m²) offers 360-degree skyline views, a Steinway & Sons baby grand piano, private climate-controlled wine cellar holding 120 rare bottles, a hand-carved Carrara marble soaking bath, and dedicated 24-Hour Private Butler service. Includes private in-suite VIP check-in/check-out and Hermès Paris amenities.',
+    tags: ['suite', 'penthouse', 'imperial', 'butler', 'luxury suite', 'piano', 'hermes'],
     isActive: true,
     priority: 'normal',
     createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
@@ -71,10 +71,10 @@ export const INITIAL_KNOWLEDGE_ITEMS: KnowledgeItem[] = [
   },
   {
     id: 'kb_5',
-    title: 'Room Service Gourmet & Chá da Tarde Palaciano',
+    title: 'Gourmet In-Suite Dining & Royal Afternoon Tea',
     category: 'exclusive_services',
-    content: 'Serviço de quarto 24 horas com menu assinado pelo Chef Pâtissier. Chá da Tarde servido diariamente no Salão de Cristal das 16h00 às 18h30 com seleção de 30 chás raros Mariage Frères, macarons Pierre Hermé e finger sandwiches de salmão defumado selvagem.',
-    tags: ['room service', 'cha da tarde', 'cafe da manha', 'patisserie'],
+    content: '24-hour in-suite fine dining menu curated by Master Pastry Chefs. Royal Afternoon Tea is presented daily in the Crystal Salon from 4:00 PM to 6:30 PM, featuring a curated selection of 30 rare Mariage Frères single-estate teas, bespoke Pierre Hermé macarons, and wild smoked salmon canapés.',
+    tags: ['in-suite dining', 'room service', 'afternoon tea', 'pastry', 'mariage freres', 'caviar'],
     isActive: true,
     priority: 'normal',
     createdAt: new Date(Date.now() - 86400000).toISOString(),
@@ -82,10 +82,10 @@ export const INITIAL_KNOWLEDGE_ITEMS: KnowledgeItem[] = [
   },
   {
     id: 'kb_6',
-    title: 'Adega Subterrânea & Sessão com o Head Sommelier',
+    title: 'Subterranean Wine Cellar & Sommelier Tastings',
     category: 'gastronomy',
-    content: 'Nossa adega subterrânea secular abriga mais de 4.500 garrafas, incluindo safras históricas de Château Margaux, Romanée-Conti e Pétrus. Degustações privativas guiadas pelo Head Sommelier Jean-Luc podem ser agendadas para até 6 convidados, acompanhadas de queijos artesanais franceses maturados.',
-    tags: ['vinho', 'sommelier', 'adega', 'degustacao', 'champagne'],
+    content: 'Our historic 19th-century underground cellar houses over 4,500 rare bottles, including historic vintages of Château Margaux, Romanée-Conti, and Château Pétrus. Private tasting sessions hosted by Head Sommelier Jean-Luc can be arranged for up to 6 guests, paired with artisanal French cave-aged cheeses and Iberian charcuterie.',
+    tags: ['wine', 'sommelier', 'wine tasting', 'cellar', 'chateau margaux', 'champagne'],
     isActive: true,
     priority: 'normal',
     createdAt: new Date().toISOString(),
@@ -93,10 +93,10 @@ export const INITIAL_KNOWLEDGE_ITEMS: KnowledgeItem[] = [
   },
   {
     id: 'kb_7',
-    title: 'Políticas do Hotel, Check-in VIP & Dress Code',
+    title: 'Hotel Policies, VIP Check-in & Dress Code',
     category: 'rules_hours',
-    content: 'Check-in padrão: 15h00 | Check-out: 12h00 (Early check-in e Late check-out cortesia para hóspedes VIP mediante disponibilidade). Política Pet: Pet-Friendly de Luxo com kit especial Dior Pet e menu canino orgânico. Não é permitido fumar em áreas internas. É exigido traje esporte fino nos restaurantes principais a partir das 19h00.',
-    tags: ['horarios', 'check-in', 'check-out', 'regras', 'pet friendly', 'dress code'],
+    content: 'Standard Check-in: 3:00 PM | Check-out: 12:00 PM (Complimentary early check-in and late check-out provided for VIP suites subject to availability). Pet Policy: Ultra-Luxury Pet-Friendly welcoming pets with custom Dior Pet beds and organic canine menu. Smoking is strictly prohibited in all indoor areas. Smart Elegant dress code is required in main dining salons after 7:00 PM.',
+    tags: ['hours', 'check-in', 'check-out', 'policies', 'dress code', 'pet friendly', 'concierge'],
     isActive: true,
     priority: 'high',
     createdAt: new Date().toISOString(),
@@ -108,53 +108,53 @@ export const INITIAL_CONVERSATION_SESSIONS: ConversationSession[] = [
   {
     id: 'session_demo_1',
     sessionId: 'session_demo_1',
-    userName: 'Sr. Henrique Albuquerque',
-    guestRoom: 'Suíte Real 702',
+    userName: 'Sir Henry Albuquerque',
+    guestRoom: 'Imperial Suite 702',
     messageCount: 4,
     messages: [
       {
         id: 'msg_1',
         role: 'user',
-        content: 'Boa noite. Gostaria de uma mesa para 2 pessoas no Le Miroir hoje às 20h30.',
+        content: 'Good evening. I would like to reserve a private table for two at Le Miroir tonight around 8:30 PM.',
         timestamp: new Date(Date.now() - 3600000 * 3).toISOString(),
-        topic: 'gastronomia',
+        topic: 'Fine Dining & Wine',
         sentiment: 'inquiry'
       },
       {
         id: 'msg_2',
         role: 'assistant',
-        content: 'Boa noite, Sr. Albuquerque. É um imenso prazer atendê-lo. O Le Miroir é uma escolha magnífica para esta noite. Permita-me verificar: temos disponível a mesa privativa 14, com vista panorâmica para as luzes da cidade. Gostaria que eu confirmasse a reserva para as 20h30 com a pré-seleção do Menu Degustação do Chef Antoine Laurent?',
+        content: 'Good evening, Sir Henry. It is my absolute pleasure to assist you. Le Miroir is an exquisite choice for this evening. I have checked with the Maître d\': Table 14 on our heated Panoramic Terrace is available at 8:30 PM, overlooking the evening skyline. Would you like me to secure this table and pre-arrange Chef Antoine Laurent\'s 8-Course Signature Tasting Menu for your party?',
         timestamp: new Date(Date.now() - 3600000 * 3 + 15000).toISOString(),
-        topic: 'gastronomia',
+        topic: 'Fine Dining & Wine',
         actions: [
           {
             id: 'act_1',
             type: 'reservation',
-            title: 'Mesa 14 no Le Miroir',
-            description: 'Reserva para 2 pessoas às 20h30 hoje',
+            title: 'Table 14 at Le Miroir',
+            description: 'Private table for 2 at 8:30 PM tonight',
             status: 'confirmed',
-            details: { horario: '20h30', pessoas: '2', local: 'Varanda Panorâmica' }
+            details: { time: '8:30 PM', guests: '2', location: 'Panoramic Terrace' }
           }
         ]
       },
       {
         id: 'msg_3',
         role: 'user',
-        content: 'Perfeito! Por favor, confirme a reserva e solicite que deixem uma garrafa de Champagne Ruinart Blanc de Blancs pronta na mesa.',
+        content: 'Wonderful! Please confirm Table 14 and have a bottle of Champagne Ruinart Blanc de Blancs chilled and ready upon our arrival.',
         timestamp: new Date(Date.now() - 3600000 * 3 + 45000).toISOString(),
-        topic: 'gastronomia',
+        topic: 'Fine Dining & Wine',
         sentiment: 'positive'
       },
       {
         id: 'msg_4',
         role: 'assistant',
-        content: 'Reserva confirmada com absoluto sucesso, Sr. Albuquerque! A mesa 14 estará pronta às 20h30 com a garrafa de Champagne Ruinart Blanc de Blancs perfeitamente refrescada no frappé de prata. Já transmiti suas instruções ao Maître. Desejo uma noite memorável.',
+        content: 'Your reservation is confirmed with the highest distinction, Sir Henry. Table 14 is reserved for 8:30 PM, and a bottle of Ruinart Blanc de Blancs will be waiting in a sterling silver wine cooler. I have briefed the Sommelier personally. Wishing you and your guest an unforgettable culinary evening.',
         timestamp: new Date(Date.now() - 3600000 * 3 + 60000).toISOString(),
-        topic: 'gastronomia'
+        topic: 'Fine Dining & Wine'
       }
     ],
-    previewText: 'Reserva no Le Miroir às 20h30 com Champagne Ruinart...',
-    detectedTopics: ['Gastronomia', 'Reservas', 'Vinhos'],
+    previewText: 'Le Miroir reservation at 8:30 PM with Ruinart Champagne...',
+    detectedTopics: ['Fine Dining & Wine', 'Table Reservations', 'Sommelier'],
     sentiment: 'positive',
     startedAt: new Date(Date.now() - 3600000 * 3).toISOString(),
     lastActiveAt: new Date(Date.now() - 3600000 * 3 + 60000).toISOString(),
@@ -162,36 +162,36 @@ export const INITIAL_CONVERSATION_SESSIONS: ConversationSession[] = [
   {
     id: 'session_demo_2',
     sessionId: 'session_demo_2',
-    userName: 'Dra. Camila Monteiro',
-    guestRoom: 'Suíte Presidencial 801',
+    userName: 'Lady Eleanor Vance',
+    guestRoom: 'Penthouse 901',
     messageCount: 3,
     messages: [
       {
         id: 'msg_5',
         role: 'user',
-        content: 'Olá, gostaria de agendar uma massagem no Spa amanhã pela manhã e saber se temos transporte para o aeroporto às 15h.',
+        content: 'Hello! I need to book the 24k Gold Ritual at the spa tomorrow morning and arrange a private transfer to the international airport for 3:00 PM.',
         timestamp: new Date(Date.now() - 3600000 * 6).toISOString(),
-        topic: 'spa',
+        topic: 'Spa & Wellness',
         sentiment: 'inquiry'
       },
       {
         id: 'msg_6',
         role: 'assistant',
-        content: 'Olá, Dra. Camila. Será uma satisfação coordenar seu dia de relaxamento e partida com total tranquilidade. Para o Spa L\'Élixir, recomendo nosso tratamento assinatura "Ritual D\'Or 24k" de 90 minutos às 10h00, que inclui taça de boas-vindas Dom Pérignon. Quanto ao transporte para o aeroporto, reservarei nosso Mercedes-Maybach Classe S privativo pontualmente para as 15h00 na entrada principal.',
+        content: 'Good day, Lady Eleanor. It is a delight to arrange your day of wellness and seamless departure. For L\'Élixir Spa, I have reserved the 90-minute "24k Royal Gold Ritual" for 10:00 AM in our private garden suite, complete with welcome Dom Pérignon champagne. Regarding your airport transfer, our private Mercedes-Maybach S-Class with executive chauffeur will be waiting at the grand entrance at exactly 3:00 PM.',
         timestamp: new Date(Date.now() - 3600000 * 6 + 18000).toISOString(),
-        topic: 'spa'
+        topic: 'Spa & Wellness'
       },
       {
         id: 'msg_7',
         role: 'user',
-        content: 'Excelente, pode confirmar ambos!',
+        content: 'Splendid, please proceed with both arrangements!',
         timestamp: new Date(Date.now() - 3600000 * 6 + 40000).toISOString(),
-        topic: 'spa',
+        topic: 'Spa & Wellness',
         sentiment: 'positive'
       }
     ],
-    previewText: 'Agendamento de Ritual D\'Or 24k no Spa e Mercedes Maybach...',
-    detectedTopics: ['Spa & Bem-estar', 'Transfer Aeroporto'],
+    previewText: '24k Gold Ritual spa booking & Mercedes-Maybach transfer...',
+    detectedTopics: ['Spa & Wellness', 'Airport Transfer', 'Chauffeur Fleet'],
     sentiment: 'positive',
     startedAt: new Date(Date.now() - 3600000 * 6).toISOString(),
     lastActiveAt: new Date(Date.now() - 3600000 * 6 + 45000).toISOString(),
@@ -312,12 +312,12 @@ class MemoryDataStore {
       session = {
         id: sessionId,
         sessionId: sessionId,
-        userName: meta?.userName || 'Hóspede VIP',
-        guestRoom: meta?.guestRoom || 'Suíte Privativa',
+        userName: meta?.userName || 'VIP Guest',
+        guestRoom: meta?.guestRoom || 'Private Suite',
         messageCount: 0,
         messages: [],
         previewText: message.content.slice(0, 80),
-        detectedTopics: meta?.topic ? [meta.topic] : ['Atendimento Geral'],
+        detectedTopics: meta?.topic ? [meta.topic] : ['General Concierge'],
         sentiment: meta?.sentiment || 'inquiry',
         startedAt: new Date().toISOString(),
         lastActiveAt: new Date().toISOString(),
@@ -360,14 +360,14 @@ class MemoryDataStore {
     });
 
     const categoryLabels: Record<string, string> = {
-      gastronomy: 'Gastronomia & Vinhos',
-      suites: 'Suítes & Acomodações',
-      spa: 'Spa & Bem-estar',
-      transport: 'Transporte & Heliponto',
-      rules_hours: 'Regras & Horários',
-      exclusive_services: 'Serviços Exclusivos',
-      events: 'Eventos & Celebrações',
-      general: 'Informações Gerais'
+      gastronomy: 'Fine Dining & Wine',
+      suites: 'Suites & Accommodations',
+      spa: 'Spa & Wellness',
+      transport: 'Chauffeur & Transfers',
+      rules_hours: 'Hotel Policies & Times',
+      exclusive_services: 'Bespoke Services',
+      events: 'Events & Celebrations',
+      general: 'General Hospitality'
     };
 
     const topCategories = Object.entries(categoryCounts).map(([cat, count]) => ({

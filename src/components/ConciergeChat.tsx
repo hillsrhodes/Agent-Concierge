@@ -29,41 +29,41 @@ interface ConciergeChatProps {
 const QUICK_ACTIONS = [
   {
     icon: Utensils,
-    title: 'Reserva no Le Miroir',
-    prompt: 'Gostaria de reservar uma mesa para 2 pessoas no Restaurante Le Miroir às 20h30 hoje. O que você recomenda no menu degustação?',
+    title: 'Table at Le Miroir',
+    prompt: 'I would like to reserve a table for 2 at Le Miroir Restaurant tonight at 8:30 PM. What do you recommend from the tasting menu?',
     tag: '3★ Michelin'
   },
   {
     icon: Sparkles,
-    title: 'Spa L\'Élixir & Ritual D\'Or',
-    prompt: 'Poderia me detalhar o Ritual D\'Or 24k do Spa e verificar disponibilidade para amanhã às 10h?',
-    tag: 'Bem-estar'
+    title: 'L\'Élixir Spa & 24k Gold Ritual',
+    prompt: 'Could you detail the 24k Royal Gold Ritual at L\'Élixir Spa and check availability for tomorrow at 10:00 AM?',
+    tag: 'Wellness Sanctuary'
   },
   {
     icon: Car,
-    title: 'Transfer Mercedes-Maybach',
-    prompt: 'Preciso de um transfer privativo para o aeroporto internacional amanhã às 15h. Quais veículos estão disponíveis?',
-    tag: 'Frota Privativa'
+    title: 'Mercedes-Maybach Transfer',
+    prompt: 'I require a private airport transfer to the international terminal tomorrow at 3:00 PM. Which vehicles are available?',
+    tag: 'Private Fleet'
   },
   {
     icon: Wine,
-    title: 'Degustação na Adega',
-    prompt: 'Gostaria de agendar uma degustação na adega subterrânea com o Head Sommelier Jean-Luc.',
-    tag: 'Vinhos Raros'
+    title: 'Sommelier Wine Cellar Tasting',
+    prompt: 'I would like to book a private tasting session in the historic wine cellar with Head Sommelier Jean-Luc.',
+    tag: 'Rare Vintages'
   },
   {
     icon: Coffee,
-    title: 'Room Service & Chá da Tarde',
-    prompt: 'Por favor, envie o Chá da Tarde Palaciano para minha suíte com seleção de chás Mariage Frères e macarons.',
+    title: 'Royal In-Suite Afternoon Tea',
+    prompt: 'Please arrange the Royal Afternoon Tea service in my suite with a selection of Mariage Frères teas and macarons.',
     tag: 'In-Suite Dining'
   }
 ];
 
 const TONE_OPTIONS: { value: ConciergeTone; label: string; desc: string }[] = [
-  { value: 'luxury_classic', label: 'Clássico & Formal', desc: 'Formal, altamente cortês e cerimonioso' },
-  { value: 'modern_executive', label: 'Executivo & Ágil', desc: 'Rápido, sofisticado e eficiente' },
-  { value: 'sommelier', label: 'Sommelier', desc: 'Foco em harmonizações e safras raras' },
-  { value: 'resort_leisure', label: 'Resort & Relaxamento', desc: 'Acolhedor, relaxante e convidativo' },
+  { value: 'luxury_classic', label: 'Classic & Ceremonial', desc: 'Formal, exceptionally polite and aristocratic' },
+  { value: 'modern_executive', label: 'Executive & Concise', desc: 'Fast, sophisticated and efficient' },
+  { value: 'sommelier', label: 'Sommelier', desc: 'Focus on haute gastronomy and rare vintages' },
+  { value: 'resort_leisure', label: 'Resort & Relaxation', desc: 'Warm, restorative and welcoming' },
 ];
 
 export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenAdmin }) => {
@@ -72,7 +72,7 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
       {
         id: 'msg_welcome',
         role: 'assistant',
-        content: `Olá, ${guestInfo.name}. É um prazer atendê-lo em sua estada na ${guestInfo.room}.\n\nComo seu Concierge Digital, estou à disposição para organizar reservas gastronômicas, agendamentos de spa, transfers privativos ou qualquer necessidade especial. Como posso auxiliá-lo hoje?`,
+        content: `Good day, ${guestInfo.name || 'esteemed guest'}. It is my distinct honor to welcome you to ${guestInfo.room || 'The Grand Lumière'}.\n\nAs your dedicated Master Concierge, I am at your disposal to arrange fine dining reservations, private spa rituals, chauffeur transfers, or bespoke in-suite requests. How may I be of service today?`,
         timestamp: new Date().toISOString(),
       },
     ];
@@ -101,7 +101,7 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
     if (!isSpeechEnabled || typeof window === 'undefined' || !('speechSynthesis' in window)) return;
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'pt-BR';
+    utterance.lang = 'en-US';
     utterance.rate = 1.0;
     utterance.pitch = 0.95;
     window.speechSynthesis.speak(utterance);
@@ -149,7 +149,7 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
       const errorMessage: ChatMessage = {
         id: `err_${Date.now()}`,
         role: 'assistant',
-        content: `Pedimos desculpas, ${guestInfo.name}. Ocorreu uma oscilação na conexão com a central de atendimento. Por favor, tente novamente em instantes.`,
+        content: `My sincere apologies, ${guestInfo.name}. There was a momentary network interruption. Please allow me to assist you again in just a moment.`,
         timestamp: new Date().toISOString(),
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -172,12 +172,12 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
   };
 
   const handleClearChat = () => {
-    if (window.confirm('Deseja iniciar um novo diálogo com o Concierge? O histórico atual será arquivado.')) {
+    if (window.confirm('Start a fresh conversation with your Concierge? Current session will be archived.')) {
       setMessages([
         {
           id: `msg_welcome_${Date.now()}`,
           role: 'assistant',
-          content: `Às suas ordens, ${guestInfo.name}. Um novo atendimento foi iniciado. Em que posso auxiliá-lo?`,
+          content: `At your service, ${guestInfo.name}. A new session has been initiated. How may I assist you?`,
           timestamp: new Date().toISOString(),
         },
       ]);
@@ -189,7 +189,7 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
     const confirmationNote: ChatMessage = {
       id: `system_${Date.now()}`,
       role: 'assistant',
-      content: `Perfeito! A solicitação para "${action.title}" foi confirmada e encaminhada ao departamento responsável.`,
+      content: `Splendid! The request for "${action.title}" has been confirmed and seamlessly coordinated with the team.`,
       timestamp: new Date().toISOString(),
     };
     setMessages(prev => [...prev, confirmationNote]);
@@ -214,11 +214,11 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
                 </h2>
                 <div className="flex items-center gap-1.5 px-2 py-0.5 bg-emerald-50 border border-emerald-200 rounded-full text-[10px] font-semibold text-emerald-700">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Gemini AI Ativo
+                  Gemini 3.7 AI Online
                 </div>
               </div>
               <p className="text-[11px] text-zinc-400">
-                Atendimento Contínuo • Base de Conhecimento Conectada
+                24/7 Digital Concierge • Grounded with Hotel Knowledge Base
               </p>
             </div>
           </div>
@@ -228,7 +228,7 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
             <div className="hidden md:flex items-center space-x-1 rounded-lg bg-zinc-100 p-1 border border-zinc-200">
               <span className="text-[11px] text-zinc-500 px-2 flex items-center gap-1 font-medium">
                 <Compass className="h-3 w-3 text-zinc-400" />
-                Estilo:
+                Tone:
               </span>
               {TONE_OPTIONS.map(tone => (
                 <button
@@ -249,12 +249,12 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
             {/* Audio Toggle */}
             <button
               onClick={() => setIsSpeechEnabled(!isSpeechEnabled)}
-              className={`flex h-8 w-8 items-center justify-center rounded-lg border transition-colors ${
+              className={`flex h-8 w-8 items-center justify-center rounded-lg border transition-colors cursor-pointer ${
                 isSpeechEnabled
                   ? 'border-zinc-900 bg-zinc-900 text-white'
                   : 'border-zinc-200 bg-white text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50'
               }`}
-              title={isSpeechEnabled ? 'Desativar voz sintetizada' : 'Ativar voz sintetizada'}
+              title={isSpeechEnabled ? 'Mute speech audio' : 'Enable voice speech audio'}
             >
               {isSpeechEnabled ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
             </button>
@@ -262,8 +262,8 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
             {/* Clear Chat */}
             <button
               onClick={handleClearChat}
-              className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-200 bg-white text-zinc-500 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 transition-colors"
-              title="Iniciar nova conversa"
+              className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-200 bg-white text-zinc-500 hover:text-rose-600 hover:border-rose-200 hover:bg-rose-50 transition-colors cursor-pointer"
+              title="Start fresh conversation"
             >
               <Trash2 className="h-3.5 w-3.5" />
             </button>
@@ -285,9 +285,9 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
             >
               <div className="flex items-center justify-between mb-4">
                 <span className="text-xs font-bold uppercase tracking-widest text-zinc-400">
-                  Sugestões Rápidas de Atendimento
+                  Curated Guest Requests
                 </span>
-                <span className="text-[11px] text-zinc-400">Clique para enviar</span>
+                <span className="text-[11px] text-zinc-400">Click to ask Concierge</span>
               </div>
 
               <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
@@ -351,7 +351,7 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
                       {message.actions && message.actions.length > 0 && (
                         <div className="mt-4 space-y-2 pt-3 border-t border-zinc-700/60">
                           <p className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
-                            Ações Coordenadas:
+                            Coordinated Actions:
                           </p>
                           {message.actions.map(action => {
                             const isConfirmed = confirmedActions[action.id];
@@ -379,11 +379,11 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
                                   {isConfirmed ? (
                                     <>
                                       <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                                      <span>Confirmado</span>
+                                      <span>Confirmed</span>
                                     </>
                                   ) : (
                                     <>
-                                      <span>Confirmar</span>
+                                      <span>Confirm</span>
                                       <ChevronRight className="h-3.5 w-3.5" />
                                     </>
                                   )}
@@ -400,15 +400,15 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
                       <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex items-center space-x-1 bg-zinc-800/90 rounded-md p-0.5 border border-zinc-700">
                         <button
                           onClick={() => handleCopy(message.id, message.content)}
-                          className="rounded p-1 text-zinc-400 hover:text-white"
-                          title="Copiar mensagem"
+                          className="rounded p-1 text-zinc-400 hover:text-white cursor-pointer"
+                          title="Copy message"
                         >
                           {isCopied ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
                         </button>
                         <button
                           onClick={() => speakText(message.content)}
-                          className="rounded p-1 text-zinc-400 hover:text-white"
-                          title="Ouvir leitura"
+                          className="rounded p-1 text-zinc-400 hover:text-white cursor-pointer"
+                          title="Listen with text-to-speech"
                         >
                           <Volume2 className="h-3 w-3" />
                         </button>
@@ -418,7 +418,7 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
 
                   {/* Timestamp & Sender label under bubble */}
                   <div className="mt-1 flex items-center gap-1.5 px-1 text-[10px] text-zinc-400 uppercase font-bold tracking-tight">
-                    <span>{isAssistant ? 'Concierge' : 'Hóspede'}</span>
+                    <span>{isAssistant ? 'Master Concierge' : 'Guest'}</span>
                     <span>•</span>
                     <span>{new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                     {message.topic && isAssistant && (
@@ -447,7 +447,7 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
               </div>
               <div className="flex items-center space-x-2 rounded-2xl border border-zinc-200 bg-white px-4 py-2.5 text-xs text-zinc-600 shadow-xs">
                 <span className="h-1.5 w-1.5 rounded-full bg-zinc-900 animate-ping" />
-                <span>Concierge formulando resposta...</span>
+                <span>Concierge is curating your response...</span>
               </div>
             </motion.div>
           )}
@@ -468,7 +468,7 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
               value={inputMessage}
               onChange={e => setInputMessage(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Escreva sua mensagem ao Concierge (ex: Reservar mesa no Le Miroir, agendar spa, transfer VIP)..."
+              placeholder="Message your Concierge (e.g. Reserve table at Le Miroir, arrange 24k Gold Spa, private Maybach transfer)..."
               rows={2}
               className="w-full resize-none bg-transparent px-4 py-3 text-sm text-zinc-900 placeholder-zinc-400 focus:outline-none"
             />
@@ -476,9 +476,9 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
             <div className="flex items-center justify-between border-t border-zinc-100 px-3.5 py-2">
               
               <div className="flex items-center space-x-2 text-[11px] text-zinc-400">
-                <span>Pressione <kbd className="rounded bg-zinc-100 px-1.5 py-0.5 text-zinc-600 border border-zinc-200 font-mono">Enter</kbd> para enviar</span>
+                <span>Press <kbd className="rounded bg-zinc-100 px-1.5 py-0.5 text-zinc-600 border border-zinc-200 font-mono">Enter</kbd> to send</span>
                 <span>•</span>
-                <span className="hidden sm:inline">24/7 Concierge</span>
+                <span className="hidden sm:inline">24/7 Digital Concierge</span>
               </div>
 
               <div className="flex items-center space-x-2">
@@ -492,7 +492,7 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
                       : 'bg-zinc-100 text-zinc-400 cursor-not-allowed'
                   }`}
                 >
-                  <span>Enviar</span>
+                  <span>Send</span>
                   <Send className="h-3 w-3" />
                 </button>
               </div>
@@ -504,7 +504,7 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
           <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px] text-zinc-400 px-1">
             <div className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-              <span>The Grand Lumière • Inteligência Artificial Conectada</span>
+              <span>The Grand Lumière • Hospitality AI Grounded in Real Knowledge</span>
             </div>
             <button
               id="btn-footer-admin-link"
@@ -512,7 +512,7 @@ export const ConciergeChat: React.FC<ConciergeChatProps> = ({ guestInfo, onOpenA
               className="flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 py-1 text-[11px] text-zinc-600 hover:text-zinc-900 hover:bg-zinc-50 hover:border-zinc-300 font-medium transition-all shadow-xs cursor-pointer"
             >
               <Bot className="h-3 w-3 text-zinc-500" />
-              <span>Painel do Administrador (Configurar Agente & Logs)</span>
+              <span>Admin Dashboard (Agent System Prompt & Knowledge)</span>
             </button>
           </div>
 
