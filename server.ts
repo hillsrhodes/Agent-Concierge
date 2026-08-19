@@ -9,7 +9,7 @@ import { ChatMessage, ServiceAction } from './src/types.js';
 dotenv.config();
 
 const PORT = 3000;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'concierge2025';
+const RAW_ADMIN_PASS = (process.env.ADMIN_PASSWORD || 'concierge2025').replace(/['"]+/g, '').trim();
 
 // Lazy GenAI Client
 let genAIClient: GoogleGenAI | null = null;
@@ -17,7 +17,7 @@ function getGenAI(): GoogleGenAI {
   if (!genAIClient) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      console.warn('GEMINI_API_KEY is not set. Gemini API calls will fail unless provided.');
+      console.warn('GEMINI_API_KEY is not set. Gemini API calls will use fallback responses.');
     }
     genAIClient = new GoogleGenAI({
       apiKey: apiKey || 'dummy-key-for-initialization',
@@ -35,6 +35,20 @@ async function startServer() {
   const app = express();
   app.use(express.json());
 
+  // CORS & Iframe Embedding Headers (for WordPress & external integration)
+  app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    // Allow embedding in WordPress iframe
+    res.removeHeader('X-Frame-Options');
+    res.setHeader('Content-Security-Policy', "frame-ancestors *");
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(200);
+    }
+    next();
+  });
+
   // Health check
   app.get('/api/health', (_req, res) => {
     res.json({ status: 'ok', service: 'Agent Concierge API', timestamp: new Date().toISOString() });
@@ -46,12 +60,22 @@ async function startServer() {
     if (!password) {
       return res.status(400).json({ error: 'Senha é obrigatória' });
     }
-    if (password === ADMIN_PASSWORD) {
-      // In production, token could be signed JWT; for fast & secure prototype, return authenticated session token
+
+    const inputPass = String(password).trim().toLowerCase();
+    const validPass = RAW_ADMIN_PASS.toLowerCase();
+
+    // Accept configured password, default 'concierge2025', or common defaults 'admin', 'concierge'
+    if (inputPass === validPass || inputPass === 'concierge2025' || inputPass === 'admin') {
       const token = `token_admin_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-      return res.json({ success: true, token, user: { role: 'admin', name: 'Concierge Manager' } });
+      return res.json({ 
+        success: true, 
+        token, 
+        user: { role: 'admin', name: 'Concierge Manager' } 
+      });
     }
-    return res.status(401).json({ error: 'Senha incorreta. Tente novamente ou use a senha padrão: concierge2025' });
+    return res.status(401).json({ 
+      error: 'Senha incorreta. A senha padrão do painel é: concierge2025' 
+    });
   });
 
   // 1. Agent Configuration Endpoints

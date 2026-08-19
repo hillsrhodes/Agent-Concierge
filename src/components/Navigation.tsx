@@ -1,13 +1,14 @@
 import React from 'react';
-import { Shield, MessageSquare, Hotel, User, LogOut } from 'lucide-react';
+import { Shield, MessageSquare, Hotel, User, LogOut, Code2, Globe } from 'lucide-react';
 
 interface NavigationProps {
-  activeTab: 'chat' | 'admin';
-  setActiveTab: (tab: 'chat' | 'admin') => void;
+  activeTab: 'chat' | 'admin' | 'wordpress_preview';
+  setActiveTab: (tab: 'chat' | 'admin' | 'wordpress_preview') => void;
   isAdminAuthenticated: boolean;
   onAdminLogout: () => void;
   guestInfo: { name: string; room: string };
   onEditGuestInfo: () => void;
+  onOpenEmbedModal: () => void;
 }
 
 export const Navigation: React.FC<NavigationProps> = ({
@@ -17,6 +18,7 @@ export const Navigation: React.FC<NavigationProps> = ({
   onAdminLogout,
   guestInfo,
   onEditGuestInfo,
+  onOpenEmbedModal,
 }) => {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-zinc-200 bg-white/90 backdrop-blur-md">
@@ -47,39 +49,69 @@ export const Navigation: React.FC<NavigationProps> = ({
           <button
             id="tab-concierge-chat"
             onClick={() => setActiveTab('chat')}
-            className={`flex items-center gap-2 rounded-md px-3.5 py-1.5 text-xs font-medium transition-all ${
+            className={`flex items-center gap-1.5 sm:gap-2 rounded-md px-2.5 sm:px-3.5 py-1.5 text-xs font-medium transition-all ${
               activeTab === 'chat'
                 ? 'bg-white text-zinc-900 font-semibold shadow-xs border border-zinc-200'
                 : 'text-zinc-500 hover:text-zinc-900'
             }`}
           >
             <MessageSquare className="h-3.5 w-3.5" />
-            <span>Chat do Concierge</span>
+            <span className="hidden sm:inline">Chat do Concierge</span>
+            <span className="sm:hidden">Chat</span>
+          </button>
+
+          <button
+            id="tab-wordpress-preview"
+            onClick={() => setActiveTab('wordpress_preview')}
+            className={`flex items-center gap-1.5 sm:gap-2 rounded-md px-2.5 sm:px-3.5 py-1.5 text-xs font-medium transition-all ${
+              activeTab === 'wordpress_preview'
+                ? 'bg-white text-zinc-900 font-semibold shadow-xs border border-zinc-200'
+                : 'text-zinc-500 hover:text-zinc-900'
+            }`}
+            title="Ver como fica o ícone flutuante em um site WordPress"
+          >
+            <Globe className="h-3.5 w-3.5" />
+            <span className="hidden sm:inline">Demo Site WordPress</span>
+            <span className="sm:hidden">Site WP</span>
           </button>
 
           <button
             id="tab-admin-dashboard"
             onClick={() => setActiveTab('admin')}
-            className={`flex items-center gap-2 rounded-md px-3.5 py-1.5 text-xs font-medium transition-all ${
+            className={`flex items-center gap-1.5 sm:gap-2 rounded-md px-2.5 sm:px-3.5 py-1.5 text-xs font-medium transition-all ${
               activeTab === 'admin'
                 ? 'bg-white text-zinc-900 font-semibold shadow-xs border border-zinc-200'
                 : 'text-zinc-500 hover:text-zinc-900'
             }`}
           >
             <Shield className="h-3.5 w-3.5" />
-            <span>Painel Admin</span>
+            <span className="hidden sm:inline">Painel Admin</span>
+            <span className="sm:hidden">Admin</span>
             {isAdminAuthenticated && (
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             )}
           </button>
         </div>
 
-        {/* Right Section: Guest Info & Admin Status */}
-        <div className="flex items-center space-x-3">
-          {activeTab === 'chat' ? (
+        {/* Right Section: WordPress Code Button & Guest Info */}
+        <div className="flex items-center space-x-2 sm:space-x-3">
+          
+          {/* WordPress Code Button */}
+          <button
+            id="btn-open-embed-modal"
+            onClick={onOpenEmbedModal}
+            className="flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-zinc-800 hover:bg-zinc-50 hover:border-zinc-300 transition-colors shadow-xs"
+            title="Copiar código para o WordPress"
+          >
+            <Code2 className="h-3.5 w-3.5 text-zinc-600" />
+            <span className="hidden md:inline">Embed no WordPress</span>
+            <span className="md:hidden">WP</span>
+          </button>
+
+          {activeTab !== 'admin' ? (
             <button
               onClick={onEditGuestInfo}
-              className="hidden sm:flex items-center space-x-2 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-xs text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 transition-colors"
+              className="hidden lg:flex items-center space-x-2 rounded-lg border border-zinc-200 bg-zinc-50 px-3 py-1.5 text-xs text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 transition-colors"
               title="Alterar perfil do hóspede"
             >
               <div className="h-2 w-2 rounded-full bg-emerald-500" />
@@ -93,7 +125,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               <div className="flex items-center space-x-2">
                 <span className="hidden sm:inline-flex items-center rounded-md border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700">
                   <span className="mr-1.5 h-2 w-2 rounded-full bg-emerald-500" />
-                  Sessão Admin Ativa
+                  Admin Ativo
                 </span>
                 <button
                   onClick={onAdminLogout}
