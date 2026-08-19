@@ -6,6 +6,7 @@ import { AdminDashboard } from './components/AdminDashboard';
 import { FloatingWidget } from './components/FloatingWidget';
 import { WordPressEmbedModal } from './components/WordPressEmbedModal';
 import { WordPressSimulator } from './components/WordPressSimulator';
+import { WidgetEmbedView } from './components/WidgetEmbedView';
 import { User, X, Check } from 'lucide-react';
 
 export default function App() {
@@ -23,7 +24,7 @@ export default function App() {
         // fallback
       }
     }
-    return { name: 'Sr. Henrique Albuquerque', room: 'Suíte Real 702' };
+    return { name: 'Sir Alexander Sterling', room: 'Royal Suite 702' };
   });
 
   const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
@@ -31,8 +32,17 @@ export default function App() {
   const [tempGuestName, setTempGuestName] = useState(guestInfo.name);
   const [tempGuestRoom, setTempGuestRoom] = useState(guestInfo.room);
 
+  // Check if current view is embedded widget mode
+  const isWidgetMode = typeof window !== 'undefined' && (
+    window.location.search.includes('mode=widget') || 
+    window.location.search.includes('embed=true') || 
+    window.location.hash === '#widget'
+  );
+
   // Sync hash routing if user enters via /#admin or /#chat
   useEffect(() => {
+    if (isWidgetMode) return;
+
     const handleHashChange = () => {
       const hash = window.location.hash.replace('#', '');
       if (hash === 'admin') {
@@ -47,7 +57,11 @@ export default function App() {
     handleHashChange();
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
-  }, []);
+  }, [isWidgetMode]);
+
+  if (isWidgetMode) {
+    return <WidgetEmbedView />;
+  }
 
   const handleTabChange = (tab: 'chat' | 'admin' | 'wordpress_preview') => {
     setActiveTab(tab);
@@ -69,8 +83,8 @@ export default function App() {
   const handleSaveGuestInfo = (e: React.FormEvent) => {
     e.preventDefault();
     const updated = {
-      name: tempGuestName.trim() || 'Hóspede Estimado',
-      room: tempGuestRoom.trim() || 'Suíte Privativa',
+      name: tempGuestName.trim() || 'Valued Guest',
+      room: tempGuestRoom.trim() || 'Private Suite',
     };
     setGuestInfo(updated);
     localStorage.setItem('agent_concierge_guest', JSON.stringify(updated));
@@ -150,7 +164,7 @@ export default function App() {
               <div className="flex items-center space-x-2">
                 <User className="h-4 w-4 text-zinc-700" />
                 <h3 className="text-sm font-bold text-zinc-900">
-                  Perfil do Hóspede
+                  Guest Profile
                 </h3>
               </div>
               <button
@@ -164,7 +178,7 @@ export default function App() {
             <form onSubmit={handleSaveGuestInfo} className="space-y-3">
               <div>
                 <label className="block text-xs font-semibold text-zinc-700">
-                  Nome Completo
+                  Full Name
                 </label>
                 <input
                   type="text"
@@ -177,7 +191,7 @@ export default function App() {
 
               <div>
                 <label className="block text-xs font-semibold text-zinc-700">
-                  Acomodação / Suíte
+                  Suite / Room Number
                 </label>
                 <input
                   type="text"
@@ -194,14 +208,14 @@ export default function App() {
                   onClick={() => setIsGuestModalOpen(false)}
                   className="rounded-xl border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-600 hover:bg-zinc-50 cursor-pointer"
                 >
-                  Cancelar
+                  Cancel
                 </button>
                 <button
                   type="submit"
                   className="flex items-center gap-1 rounded-xl bg-zinc-900 px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-zinc-800 cursor-pointer shadow-xs"
                 >
                   <Check className="h-3.5 w-3.5" />
-                  <span>Salvar</span>
+                  <span>Save</span>
                 </button>
               </div>
             </form>

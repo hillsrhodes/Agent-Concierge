@@ -54,6 +54,13 @@ async function startServer() {
     res.json({ status: 'ok', service: 'Agent Concierge API', timestamp: new Date().toISOString() });
   });
 
+  // Serve Widget JS directly with CORS for WordPress and external websites
+  app.get('/widget.js', (_req, res) => {
+    res.setHeader('Content-Type', 'application/javascript');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.sendFile(path.join(process.cwd(), 'public', 'widget.js'));
+  });
+
   // Admin Authentication
   app.post('/api/admin/login', (req, res) => {
     const { password } = req.body;

@@ -8,8 +8,12 @@ import {
   Sparkles, 
   ExternalLink, 
   Layers, 
-  HelpCircle,
-  Laptop
+  HelpCircle, 
+  Laptop,
+  MousePointerClick,
+  CheckCircle2,
+  Info,
+  ShieldCheck
 } from 'lucide-react';
 
 interface WordPressEmbedModalProps {
@@ -18,40 +22,32 @@ interface WordPressEmbedModalProps {
 }
 
 export const WordPressEmbedModal: React.FC<WordPressEmbedModalProps> = ({ isOpen, onClose }) => {
-  const [activeTab, setActiveTab] = useState<'script' | 'iframe' | 'wordpress_guide'>('script');
+  const [activeTab, setActiveTab] = useState<'script_tag' | 'elementor' | 'wpcode' | 'wordpress_guide'>('script_tag');
   const [copiedType, setCopiedType] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
-  const currentOrigin = typeof window !== 'undefined' ? window.location.origin : 'https://meusite.com';
+  const getPublicOrigin = () => {
+    if (typeof window === 'undefined') return 'https://ais-pre-u2zxy2syjmcnn4abo2lw6l-380210956811.us-east1.run.app';
+    const origin = window.location.origin;
+    if (origin.includes('ais-dev-')) {
+      return origin.replace('ais-dev-', 'ais-pre-');
+    }
+    return origin;
+  };
 
-  const scriptSnippet = `<!-- Widget Flutuante Agent Concierge para WordPress -->
-<script>
-  (function() {
-    var iframe = document.createElement('iframe');
-    iframe.src = '${currentOrigin}/';
-    iframe.style.position = 'fixed';
-    iframe.style.bottom = '20px';
-    iframe.style.right = '20px';
-    iframe.style.width = '400px';
-    iframe.style.height = '620px';
-    iframe.style.border = 'none';
-    iframe.style.zIndex = '999999';
-    iframe.style.borderRadius = '20px';
-    iframe.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1)';
-    iframe.allow = 'microphone';
-    document.body.appendChild(iframe);
-  })();
-</script>`;
+  const currentOrigin = getPublicOrigin();
 
-  const iframeSnippet = `<!-- Iframe incorporado para páginas específicas ou Elementor / Gutenberg -->
-<iframe 
-  src="${currentOrigin}/" 
-  width="100%" 
-  height="700px" 
-  style="border: 1px solid #e4e4e7; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);"
-  allow="microphone"
-></iframe>`;
+  const scriptSnippet = `<!-- ============================================================== -->
+<!-- WIDGET NATIVO AGENT CONCIERGE (SEM IFRAME - NUNCA DÁ ERRO 403) -->
+<!-- Cole no Elementor (bloco HTML), WPCode ou Rodapé do seu site   -->
+<!-- ============================================================== -->
+<script src="${currentOrigin}/widget.js" defer></script>`;
+
+  const elementorSnippet = `<!-- Bloco HTML para Elementor / Gutenberg -->
+<div id="ac-wordpress-native-root">
+  <script src="${currentOrigin}/widget.js" defer></script>
+</div>`;
 
   const copyToClipboard = (text: string, type: string) => {
     navigator.clipboard.writeText(text);
@@ -71,10 +67,10 @@ export const WordPressEmbedModal: React.FC<WordPressEmbedModalProps> = ({ isOpen
             </div>
             <div>
               <h3 className="text-base font-bold text-zinc-900 flex items-center gap-2">
-                Como Inserir o Ícone Flutuante no WordPress
+                Instalar Botão Flutuante no Seu Site
               </h3>
               <p className="text-xs text-zinc-500">
-                Instruções e código pronto para colar no seu site WordPress (Elementor, Divi, WPCode ou tema)
+                Código nativo sem iframes. Abre o chat exclusivamente ao clicar e nunca dá erro 403.
               </p>
             </div>
           </div>
@@ -88,61 +84,75 @@ export const WordPressEmbedModal: React.FC<WordPressEmbedModalProps> = ({ isOpen
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-2 border-b border-zinc-100 px-6 py-2 bg-zinc-50/30">
+        <div className="flex items-center gap-2 border-b border-zinc-100 px-6 py-2 bg-zinc-50/30 overflow-x-auto">
           <button
-            onClick={() => setActiveTab('script')}
-            className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-              activeTab === 'script'
+            onClick={() => setActiveTab('script_tag')}
+            className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'script_tag'
                 ? 'bg-zinc-900 text-white shadow-xs'
                 : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100'
             }`}
           >
-            1. Widget Flutuante (Script no Rodapé)
+            1. Script de 1 Linha (Recomendado)
           </button>
 
           <button
-            onClick={() => setActiveTab('iframe')}
-            className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
-              activeTab === 'iframe'
+            onClick={() => setActiveTab('elementor')}
+            className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'elementor'
                 ? 'bg-zinc-900 text-white shadow-xs'
                 : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100'
             }`}
           >
-            2. Iframe para Página ou Bloco
+            2. Para Elementor (Bloco HTML)
+          </button>
+
+          <button
+            onClick={() => setActiveTab('wpcode')}
+            className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+              activeTab === 'wpcode'
+                ? 'bg-zinc-900 text-white shadow-xs'
+                : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100'
+            }`}
+          >
+            3. Plugin WPCode (Footer)
           </button>
 
           <button
             onClick={() => setActiveTab('wordpress_guide')}
-            className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer ${
+            className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
               activeTab === 'wordpress_guide'
                 ? 'bg-zinc-900 text-white shadow-xs'
                 : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100'
             }`}
           >
-            3. Passo a Passo no WordPress
+            4. Passo a Passo WordPress
           </button>
         </div>
 
         {/* Content Area */}
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           
-          {activeTab === 'script' && (
+          {/* TAB 1: SCRIPT 1 LINE */}
+          {activeTab === 'script_tag' && (
             <div className="space-y-4">
-              <div>
-                <span className="text-xs font-bold uppercase tracking-widest text-zinc-400 block mb-1">
-                  Código do Widget Flutuante para o Rodapé
-                </span>
-                <p className="text-xs text-zinc-600">
-                  Cole este trecho de código no rodapé (Footer) do seu WordPress usando o plugin <strong>WPCode</strong> ou nas opções do seu tema (ex: Astra, Divi, Elementor Pro).
-                </p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-xs font-bold uppercase tracking-widest text-zinc-400 block mb-1">
+                    Script Nativo (Sem Iframe)
+                  </span>
+                  <p className="text-xs text-zinc-600">
+                    Insere o botão no canto da tela e gerencia a abertura e as conversas direto na página.
+                  </p>
+                </div>
               </div>
 
               <div className="relative rounded-xl border border-zinc-200 bg-zinc-900 p-4 font-mono text-xs text-zinc-200">
                 <button
-                  onClick={() => copyToClipboard(scriptSnippet, 'script')}
-                  className="absolute top-3 right-3 flex items-center gap-1 rounded-md bg-white/10 px-2.5 py-1 text-[11px] font-sans font-semibold text-white hover:bg-white/20 transition-colors"
+                  onClick={() => copyToClipboard(scriptSnippet, 'script_tag')}
+                  className="absolute top-3 right-3 flex items-center gap-1 rounded-md bg-white/10 px-2.5 py-1 text-[11px] font-sans font-semibold text-white hover:bg-white/20 transition-colors cursor-pointer"
                 >
-                  {copiedType === 'script' ? (
+                  {copiedType === 'script_tag' ? (
                     <>
                       <Check className="h-3 w-3 text-emerald-400" />
                       <span>Copiado!</span>
@@ -150,39 +160,43 @@ export const WordPressEmbedModal: React.FC<WordPressEmbedModalProps> = ({ isOpen
                   ) : (
                     <>
                       <Copy className="h-3 w-3" />
-                      <span>Copiar Código</span>
+                      <span>Copiar Tag &lt;script&gt;</span>
                     </>
                   )}
                 </button>
                 <pre className="overflow-x-auto whitespace-pre-wrap">{scriptSnippet}</pre>
               </div>
 
-              <div className="rounded-xl bg-zinc-50 border border-zinc-200 p-4 text-xs text-zinc-600 space-y-2">
-                <p className="font-bold text-zinc-900">O que este código faz?</p>
-                <p>
-                  Ele injeta o ícone flutuante do <strong>Agent Concierge</strong> no canto inferior direito de todas as páginas do seu site WordPress, permitindo que os visitantes conversem diretamente com a IA.
+              <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4 text-xs text-emerald-900 space-y-1">
+                <p className="font-bold flex items-center gap-1.5">
+                  <ShieldCheck className="h-4 w-4 text-emerald-700" />
+                  100% Livre de Erro 403:
+                </p>
+                <p className="text-emerald-800">
+                  Substitua o código antigo com iframe por este script nativo. O botão flutuante aparecerá no canto e abrirá a conversa instantaneamente ao clicar.
                 </p>
               </div>
             </div>
           )}
 
-          {activeTab === 'iframe' && (
+          {/* TAB 2: ELEMENTOR */}
+          {activeTab === 'elementor' && (
             <div className="space-y-4">
               <div>
                 <span className="text-xs font-bold uppercase tracking-widest text-zinc-400 block mb-1">
-                  Código Iframe para Páginas e Construtores Visuais
+                  Código para Bloco HTML no Elementor
                 </span>
                 <p className="text-xs text-zinc-600">
-                  Ideal se você deseja colocar o chat incorporado no meio de uma página de "Contato", "Atendimento VIP" ou "Concierge" usando o bloco HTML do WordPress, Elementor ou Divi.
+                  Arraste um widget HTML no Elementor e cole este trecho:
                 </p>
               </div>
 
               <div className="relative rounded-xl border border-zinc-200 bg-zinc-900 p-4 font-mono text-xs text-zinc-200">
                 <button
-                  onClick={() => copyToClipboard(iframeSnippet, 'iframe')}
-                  className="absolute top-3 right-3 flex items-center gap-1 rounded-md bg-white/10 px-2.5 py-1 text-[11px] font-sans font-semibold text-white hover:bg-white/20 transition-colors"
+                  onClick={() => copyToClipboard(elementorSnippet, 'elementor')}
+                  className="absolute top-3 right-3 flex items-center gap-1 rounded-md bg-white/10 px-2.5 py-1 text-[11px] font-sans font-semibold text-white hover:bg-white/20 transition-colors cursor-pointer"
                 >
-                  {copiedType === 'iframe' ? (
+                  {copiedType === 'elementor' ? (
                     <>
                       <Check className="h-3 w-3 text-emerald-400" />
                       <span>Copiado!</span>
@@ -194,55 +208,46 @@ export const WordPressEmbedModal: React.FC<WordPressEmbedModalProps> = ({ isOpen
                     </>
                   )}
                 </button>
-                <pre className="overflow-x-auto whitespace-pre-wrap">{iframeSnippet}</pre>
+                <pre className="overflow-x-auto whitespace-pre-wrap">{elementorSnippet}</pre>
               </div>
             </div>
           )}
 
+          {/* TAB 3: WPCODE */}
+          {activeTab === 'wpcode' && (
+            <div className="space-y-4 text-xs text-zinc-700">
+              <span className="text-xs font-bold uppercase tracking-widest text-zinc-400 block">
+                Instalação Global com WPCode
+              </span>
+              <div className="rounded-xl border border-zinc-200 p-4 space-y-2 bg-white">
+                <ol className="list-decimal list-inside space-y-1.5 text-zinc-600 leading-relaxed pl-2">
+                  <li>No WordPress, acesse <strong>Code Snippets → Header & Footer</strong>.</li>
+                  <li>Cole o script <code>&lt;script src="{currentOrigin}/widget.js" defer&gt;&lt;/script&gt;</code> no campo <strong>Footer</strong>.</li>
+                  <li>Clique em <strong>Save Changes</strong>.</li>
+                </ol>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 4: WORDPRESS GUIDE */}
           {activeTab === 'wordpress_guide' && (
             <div className="space-y-4 text-xs text-zinc-700">
               <span className="text-xs font-bold uppercase tracking-widest text-zinc-400 block">
-                Guia de Instalação no WordPress (3 Maneiras Fáceis)
+                Guia Rápido de Instalação
               </span>
 
-              {/* Method 1: WPCode */}
               <div className="rounded-xl border border-zinc-200 p-4 space-y-2 bg-white">
-                <h4 className="font-bold text-sm text-zinc-900">
-                  Método 1: Com o Plugin Gratuito "WPCode" (Recomendado)
+                <h4 className="font-bold text-sm text-zinc-900 flex items-center gap-2">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-zinc-900 text-white text-[10px]">1</span>
+                  <span>No Elementor</span>
                 </h4>
-                <ol className="list-decimal list-inside space-y-1 text-zinc-600 leading-relaxed">
-                  <li>No painel do WordPress, vá em <strong>Plugins → Adicionar Novo</strong> e instale o <strong>WPCode</strong> (Insert Headers and Footers).</li>
-                  <li>Acesse <strong>Code Snippets → Header & Footer</strong> no menu lateral do WordPress.</li>
-                  <li>Cole o código na caixa <strong>Footer</strong>.</li>
-                  <li>Clique em <strong>Salvar Alterações</strong>. Pronto! O ícone flutuante aparecerá em todo o site.</li>
+                <ol className="list-decimal list-inside space-y-1 text-zinc-600 leading-relaxed pl-2">
+                  <li>Abra a página ou o Footer no Elementor.</li>
+                  <li>Apague o código anterior do iframe.</li>
+                  <li>Cole <code>&lt;script src="{currentOrigin}/widget.js" defer&gt;&lt;/script&gt;</code> no bloco HTML.</li>
+                  <li>Clique em <strong>Atualizar</strong>.</li>
                 </ol>
               </div>
-
-              {/* Method 2: Elementor */}
-              <div className="rounded-xl border border-zinc-200 p-4 space-y-2 bg-white">
-                <h4 className="font-bold text-sm text-zinc-900">
-                  Método 2: Com o Elementor
-                </h4>
-                <ol className="list-decimal list-inside space-y-1 text-zinc-600 leading-relaxed">
-                  <li>Edite qualquer página ou o modelo de <em>Footer</em> no Elementor.</li>
-                  <li>Arraste o widget <strong>HTML</strong> para a seção desejada.</li>
-                  <li>Cole o código do Script ou do Iframe na caixa de código.</li>
-                  <li>Clique em <strong>Publicar / Atualizar</strong>.</li>
-                </ol>
-              </div>
-
-              {/* Method 3: Gutenberg */}
-              <div className="rounded-xl border border-zinc-200 p-4 space-y-2 bg-white">
-                <h4 className="font-bold text-sm text-zinc-900">
-                  Método 3: Bloco HTML Padrão do WordPress (Gutenberg)
-                </h4>
-                <ol className="list-decimal list-inside space-y-1 text-zinc-600 leading-relaxed">
-                  <li>Edite uma página ou post no editor padrão do WordPress.</li>
-                  <li>Adicione um novo bloco digitando <code className="bg-zinc-100 px-1.5 py-0.5 rounded font-mono">/html</code> (HTML Personalizado).</li>
-                  <li>Cole o código do Iframe e salve a página.</li>
-                </ol>
-              </div>
-
             </div>
           )}
 
@@ -251,7 +256,7 @@ export const WordPressEmbedModal: React.FC<WordPressEmbedModalProps> = ({ isOpen
         {/* Footer */}
         <div className="flex items-center justify-between border-t border-zinc-100 bg-zinc-50/70 px-6 py-3">
           <span className="text-xs text-zinc-500">
-            Compatível com qualquer tema WordPress, WooCommerce, Elementor, Divi e Gutenberg.
+            Compatível com WordPress, Elementor, Divi, Gutenberg, Shopify e sites HTML.
           </span>
           <button
             onClick={onClose}
