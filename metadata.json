@@ -1,0 +1,6 @@
+{
+  "name": "Agent Concierge",
+  "description": "Plataforma sofisticada de IA com Chat Concierge de Luxo e Painel Administrativo para Gestão de Prompts, Base de Conhecimento e Auditoria de Conversas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
