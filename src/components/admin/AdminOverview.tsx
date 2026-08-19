@@ -6,13 +6,14 @@ import {
   CheckCircle2, 
   Clock, 
   ArrowUpRight,
-  Bot
+  Bot,
+  Code2
 } from 'lucide-react';
 import { AdminStats } from '../../types';
 
 interface AdminOverviewProps {
   stats: AdminStats | null;
-  onNavigateTab: (tab: 'prompt' | 'knowledge' | 'logs') => void;
+  onNavigateTab: (tab: 'prompt' | 'knowledge' | 'logs' | 'snippets') => void;
 }
 
 export const AdminOverview: React.FC<AdminOverviewProps> = ({ stats, onNavigateTab }) => {
@@ -204,6 +205,22 @@ export const AdminOverview: React.FC<AdminOverviewProps> = ({ stats, onNavigateT
             
             <div className="space-y-2">
               <button
+                type="button"
+                onClick={() => onNavigateTab('snippets')}
+                className="w-full flex items-center justify-between rounded-xl border border-zinc-200 bg-zinc-50/50 p-3 text-left hover:border-zinc-400 hover:bg-white transition-colors cursor-pointer"
+              >
+                <div className="flex items-center space-x-3">
+                  <Code2 className="h-4 w-4 text-zinc-800" />
+                  <div>
+                    <p className="text-xs font-semibold text-zinc-900">Códigos & Snippets</p>
+                    <p className="text-[11px] text-zinc-500">Copiar widget para WordPress e Elementor</p>
+                  </div>
+                </div>
+                <ArrowUpRight className="h-4 w-4 text-zinc-400" />
+              </button>
+
+              <button
+                type="button"
                 onClick={() => onNavigateTab('prompt')}
                 className="w-full flex items-center justify-between rounded-xl border border-zinc-200 bg-zinc-50/50 p-3 text-left hover:border-zinc-400 hover:bg-white transition-colors cursor-pointer"
               >
@@ -218,6 +235,7 @@ export const AdminOverview: React.FC<AdminOverviewProps> = ({ stats, onNavigateT
               </button>
 
               <button
+                type="button"
                 onClick={() => onNavigateTab('knowledge')}
                 className="w-full flex items-center justify-between rounded-xl border border-zinc-200 bg-zinc-50/50 p-3 text-left hover:border-zinc-400 hover:bg-white transition-colors cursor-pointer"
               >
@@ -232,6 +250,7 @@ export const AdminOverview: React.FC<AdminOverviewProps> = ({ stats, onNavigateT
               </button>
 
               <button
+                type="button"
                 onClick={() => onNavigateTab('logs')}
                 className="w-full flex items-center justify-between rounded-xl border border-zinc-200 bg-zinc-50/50 p-3 text-left hover:border-zinc-400 hover:bg-white transition-colors cursor-pointer"
               >

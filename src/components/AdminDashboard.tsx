@@ -8,12 +8,14 @@ import {
   MessageCircle, 
   ChevronRight,
   Bot,
-  Sliders
+  Sliders,
+  Code2
 } from 'lucide-react';
 import { AdminOverview } from './admin/AdminOverview';
 import { AgentPromptConfig } from './admin/AgentPromptConfig';
 import { KnowledgeBaseManager } from './admin/KnowledgeBaseManager';
 import { ConversationLogsViewer } from './admin/ConversationLogsViewer';
+import { SnippetsManager } from './admin/SnippetsManager';
 import { AdminStats } from '../types';
 import { api } from '../services/api';
 
@@ -22,7 +24,7 @@ interface AdminDashboardProps {
   onGoToChat: () => void;
 }
 
-export type AdminTab = 'overview' | 'prompt' | 'knowledge' | 'logs';
+export type AdminTab = 'overview' | 'prompt' | 'knowledge' | 'logs' | 'snippets';
 
 export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onGoToChat }) => {
   const [activeTab, setActiveTab] = useState<AdminTab>(() => {
@@ -31,6 +33,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onGoTo
       if (hash.includes('knowledge') || hash.includes('knowledge-base')) return 'knowledge';
       if (hash.includes('prompt') || hash.includes('config') || hash.includes('agent')) return 'prompt';
       if (hash.includes('logs') || hash.includes('conversations')) return 'logs';
+      if (hash.includes('snippets') || hash.includes('embed') || hash.includes('code')) return 'snippets';
     }
     return 'overview';
   });
@@ -89,6 +92,12 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onGoTo
       subLabel: 'Histórico & Auditoria de Atendimentos', 
       icon: MessageSquare, 
       badge: stats?.totalConversations ?? 3
+    },
+    { 
+      id: 'snippets', 
+      label: 'Códigos & Snippets', 
+      subLabel: 'Integração WordPress & Scripts', 
+      icon: Code2 
     },
   ];
 
@@ -205,6 +214,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onGoTo
           {activeTab === 'prompt' && <AgentPromptConfig />}
 
           {activeTab === 'logs' && <ConversationLogsViewer />}
+
+          {activeTab === 'snippets' && <SnippetsManager />}
         </div>
 
       </div>
