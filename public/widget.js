@@ -37,17 +37,17 @@
     var isMuted = true;
     var isLoading = false;
     var sessionId = 'ses_' + Math.random().toString(36).substring(2, 9);
-    var guestInfo = { name: 'Valued Guest', room: 'Royal Suite 702' };
+    var guestInfo = { name: 'Discerning Client', room: 'Custom Estate Inquiry' };
     
     var messages = [
       {
         id: 'msg_welcome',
         role: 'assistant',
-        content: "Welcome to The Grand Lumière. I am your Agent Concierge. How may I assist you with private reservations, spa rituals, or bespoke hotel services today?",
+        content: "Welcome to Harmony Homes. I am your Master Luxury Real Estate Advisor & Concierge. How may I assist you with custom residences, architectural design, or private estate consultations today?",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         actions: [
-          { id: 'act_dining', title: 'Table for Two at Le Miroir', description: 'Michelin-starred French dining tonight at 8:30 PM' },
-          { id: 'act_spa', title: "L'Élixir Spa & 24k Gold Ritual", description: 'Bespoke 90-min wellness therapy' }
+          { id: 'act_egan', title: 'Egan Crest (Coming 2026)', description: 'Desert Modernism enclave with panoramic Las Vegas Strip views' },
+          { id: 'act_consult', title: 'Private Executive Consultation', description: 'One-on-one session with Principal Leadership Team' }
         ]
       }
     ];
@@ -463,7 +463,7 @@
           </div>
           <div>
             <div class="ac-header-title">Agent Concierge</div>
-            <div class="ac-header-status"><span class="ac-header-pulse"></span> The Grand Lumière • Online</div>
+            <div class="ac-header-status"><span class="ac-header-pulse"></span> Harmony Homes • Online</div>
           </div>
         </div>
         <div class="ac-header-btns">
@@ -477,22 +477,23 @@
       </div>
 
       <div id="ac-pills-bar">
-        <button class="ac-pill" data-prompt="I would like to reserve a private table for two at Le Miroir tonight at 8:30 PM.">🍽️ Table at Le Miroir</button>
-        <button class="ac-pill" data-prompt="Could you provide details on the 24k Royal Gold Ritual at L'Élixir Spa and check availability?">💆 24k Gold Spa</button>
-        <button class="ac-pill" data-prompt="Please arrange a private Mercedes-Maybach airport transfer for tomorrow.">🚗 Maybach Transfer</button>
+        <button class="ac-pill" data-prompt="Could you provide details on the upcoming Egan Crest development and its Las Vegas Strip views?">🏡 Egan Crest 2026</button>
+        <button class="ac-pill" data-prompt="How does Harmony Homes' 5-Step Design & Build methodology work for custom luxury residences?">📐 5-Step Design & Build</button>
+        <button class="ac-pill" data-prompt="Tell me about SkyFire Estate and your Desert Modernism architectural philosophy.">🏛️ SkyFire Estate</button>
+        <button class="ac-pill" data-prompt="I would like to schedule a private consultation with the principal leadership team regarding a custom build.">📅 Private Consultation</button>
       </div>
 
       <div id="ac-msg-stream"></div>
 
       <div id="ac-input-bar">
         <form class="ac-input-form" id="ac-form">
-          <input type="text" id="ac-input-field" placeholder="Message your Concierge..." autocomplete="off" />
+          <input type="text" id="ac-input-field" placeholder="Message your Real Estate Concierge..." autocomplete="off" />
           <button type="submit" id="ac-send-btn" aria-label="Send">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
           </button>
         </form>
         <div class="ac-footer-credit">
-          <span>The Grand Lumière AI Concierge</span>
+          <span>Harmony Homes Luxury Real Estate</span>
           <span>Powered by Gemini</span>
         </div>
       </div>
@@ -546,7 +547,7 @@
             `;
             var btn = item.querySelector('#act-' + act.id);
             btn.addEventListener('click', function () {
-              btn.textContent = '✓ Confirmed by Concierge';
+              btn.textContent = '✓ Coordinated with Leadership';
               btn.className = 'ac-act-btn ac-act-confirmed';
             });
             actWrap.appendChild(item);
@@ -566,7 +567,7 @@
       if (isLoading) {
         var loadingWrap = document.createElement('div');
         loadingWrap.className = 'ac-loading-indicator';
-        loadingWrap.innerHTML = '<div class="ac-spinner"></div><span>Concierge is curating your response...</span>';
+        loadingWrap.innerHTML = '<div class="ac-spinner"></div><span>Advising with Harmony Homes leadership...</span>';
         msgStream.appendChild(loadingWrap);
       }
 
@@ -639,22 +640,22 @@
         var botMsg = {
           id: 'a_' + Date.now(),
           role: 'assistant',
-          content: data.reply || "Certainly. I have logged your request with our Head Concierge.",
+          content: data.reply || "It is our distinct pleasure to assist you. Our leadership team has received your custom residence inquiry.",
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           actions: data.actions || []
         };
         messages.push(botMsg);
         speakText(botMsg.content);
       } catch (err) {
-        // Fallback intelligent response
+        // Fallback intelligent response for luxury real estate
         var lower = text.toLowerCase();
-        var fallbackReply = "Certainly. I would be delighted to arrange that for you. Our guest relations desk has received your request for " + guestInfo.room + ". Is there anything specific you would like to customize?";
-        if (lower.indexOf('spa') !== -1 || lower.indexOf('massage') !== -1) {
-          fallbackReply = "Our L'Élixir Spa sanctuary is at your service. I have noted your interest in the 24k Gold Royal Ritual. May I confirm your preferred appointment time tomorrow?";
-        } else if (lower.indexOf('table') !== -1 || lower.indexOf('miroir') !== -1 || lower.indexOf('dinner') !== -1) {
-          fallbackReply = "Le Miroir features our 3-Michelin-starred tasting menu curated by Chef Laurent Dubois. I have reserved an intimate private booth for you tonight at 8:30 PM.";
-        } else if (lower.indexOf('car') !== -1 || lower.indexOf('maybach') !== -1 || lower.indexOf('transfer') !== -1) {
-          fallbackReply = "Our private Mercedes-Maybach fleet is standing by with an executive chauffeur at your requested departure hour.";
+        var fallbackReply = "It is my distinct pleasure to assist you. Harmony Homes brings over 40 years of elite building experience in Las Vegas under founder Jim Rhodes. May I schedule a private executive consultation with our principal leadership team to discuss your custom residence goals?";
+        if (lower.indexOf('egan') !== -1 || lower.indexOf('strip') !== -1) {
+          fallbackReply = "Egan Crest is our premier 2026 enclave showcasing cutting-edge Desert Modernism and unobstructed panoramic Las Vegas Strip views. May I provide the full architectural site dossier for your review?";
+        } else if (lower.indexOf('5-step') !== -1 || lower.indexOf('methodology') !== -1 || lower.indexOf('design') !== -1) {
+          fallbackReply = "Our 5-Step Design & Build methodology provides complete turnkey excellence: 1. Vision & Strategy | 2. Integrated Planning & Design | 3. Engineering Alignment | 4. Precision Execution | 5. Turnkey Delivery. Would you like to schedule a design review for your custom parcel?";
+        } else if (lower.indexOf('skyfire') !== -1 || lower.indexOf('modernist') !== -1) {
+          fallbackReply = "SkyFire Estate is an iconic modernist trophy home featuring cantilevered steel pavilions, a 500-bottle wine gallery, and zero-edge resort pool integration. I would be pleased to share high-resolution architectural photography.";
         }
 
         var fallbackMsg = {

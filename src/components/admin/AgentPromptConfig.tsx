@@ -21,7 +21,7 @@ export const AgentPromptConfig: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   // Playground / Live Testing State
-  const [testPrompt, setTestPrompt] = useState('I would like a private table reservation for two at Le Miroir tonight at 8:30 PM.');
+  const [testPrompt, setTestPrompt] = useState('Could you share details on the upcoming Egan Crest development and your 5-Step Design & Build methodology?');
   const [testResponse, setTestResponse] = useState<string | null>(null);
   const [isTesting, setIsTesting] = useState(false);
 
@@ -205,9 +205,10 @@ export const AgentPromptConfig: React.FC = () => {
             <div className="rounded-xl bg-zinc-50 border border-zinc-200 p-3.5 text-[11px] text-zinc-600 space-y-1">
               <p className="font-semibold text-zinc-800">Prompting Guidelines:</p>
               <ul className="list-disc list-inside space-y-0.5 text-zinc-500">
-                <li>Enforce English hospitality demeanor, courtesy, and proactive coordination.</li>
-                <li>Guide the agent on structured confirmations for dining, spa, and chauffeur transfers.</li>
-                <li>Active Knowledge Base items are automatically grounded in every query.</li>
+                <li>Enforce high-touch luxury real estate demeanor, courtesy, and discreet authority.</li>
+                <li>Highlight Harmony Homes' 40-year legacy under founder Jim Rhodes (1,000+ homes).</li>
+                <li>Guide clients through the 5-Step Design & Build approach and Egan Crest / SkyFire Estate.</li>
+                <li>Gently qualify timelines and offer private consultations with the principal leadership team.</li>
               </ul>
             </div>
 
@@ -241,9 +242,9 @@ export const AgentPromptConfig: React.FC = () => {
               Model Parameters
             </h3>
 
-            {/* Hotel Name */}
+            {/* Hotel / Brand Name */}
             <div>
-              <label className="text-xs font-semibold text-zinc-700">Hotel / Property Name</label>
+              <label className="text-xs font-semibold text-zinc-700">Brand / Company Name</label>
               <input
                 type="text"
                 value={config.hotelName}

@@ -13,26 +13,26 @@ import {
   AlertCircle,
   CheckCircle2,
   XCircle,
-  Utensils,
-  BedDouble,
-  Heart,
-  Car,
-  Clock,
-  Crown,
-  Calendar
+  Building2,
+  Layers,
+  Landmark,
+  MapPin,
+  Calendar,
+  Crown
 } from 'lucide-react';
 import { KnowledgeItem, KnowledgeCategory } from '../../types';
 import { api } from '../../services/api';
 
 const CATEGORIES: { value: KnowledgeCategory | 'all'; label: string; icon: React.ElementType }[] = [
   { value: 'all', label: 'Todas as Categorias', icon: Database },
-  { value: 'gastronomy', label: 'Gastronomia & Vinhos', icon: Utensils },
-  { value: 'suites', label: 'Suítes & Acomodações', icon: BedDouble },
-  { value: 'spa', label: 'Spa & Bem-estar', icon: Heart },
-  { value: 'transport', label: 'Transporte & Transfers', icon: Car },
-  { value: 'rules_hours', label: 'Regras & Horários', icon: Clock },
-  { value: 'exclusive_services', label: 'Serviços Exclusivos', icon: Crown },
-  { value: 'events', label: 'Eventos & Celebrações', icon: Calendar },
+  { value: 'developments', label: 'Empreendimentos & Enclaves (Egan Crest)', icon: Building2 },
+  { value: 'methodology', label: 'Metodologia (5-Step Design & Build)', icon: Layers },
+  { value: 'architecture', label: 'Arquitetura (Desert Modernism)', icon: Landmark },
+  { value: 'legacy', label: 'Legado & Jim Rhodes (40+ Anos)', icon: Sparkles },
+  { value: 'consultations', label: 'Consultorias & Liderança', icon: Calendar },
+  { value: 'land_acquisition', label: 'Terrenos & Vistas Strip', icon: MapPin },
+  { value: 'exclusive_services', label: 'Serviços VIP & Dossiers', icon: Crown },
+  { value: 'general', label: 'Informações Gerais', icon: Database },
 ];
 
 export const KnowledgeBaseManager: React.FC = () => {
@@ -55,7 +55,7 @@ export const KnowledgeBaseManager: React.FC = () => {
     priority: 'high' | 'normal' | 'low';
   }>({
     title: '',
-    category: 'gastronomy',
+    category: 'developments',
     content: '',
     tags: '',
     isActive: true,
@@ -450,13 +450,13 @@ export const KnowledgeBaseManager: React.FC = () => {
                   onChange={e => setFormData({ ...formData, category: e.target.value as KnowledgeCategory })}
                   className="mt-1 w-full rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs text-zinc-900 focus:border-zinc-900 focus:outline-none cursor-pointer"
                 >
-                  <option value="gastronomy">Gastronomia & Vinhos</option>
-                  <option value="suites">Suítes & Acomodações</option>
-                  <option value="spa">Spa & Bem-estar</option>
-                  <option value="transport">Transporte & Transfers</option>
-                  <option value="rules_hours">Regras & Horários</option>
-                  <option value="exclusive_services">Serviços Exclusivos</option>
-                  <option value="events">Eventos & Celebrações</option>
+                  <option value="developments">Empreendimentos & Enclaves (Egan Crest)</option>
+                  <option value="methodology">Metodologia (5-Step Design & Build)</option>
+                  <option value="architecture">Arquitetura (Desert Modernism)</option>
+                  <option value="legacy">Legado & Jim Rhodes (40+ Anos)</option>
+                  <option value="consultations">Consultorias & Liderança</option>
+                  <option value="land_acquisition">Terrenos & Vistas Strip</option>
+                  <option value="exclusive_services">Serviços VIP & Dossiers</option>
                   <option value="general">Informações Gerais</option>
                 </select>
               </div>

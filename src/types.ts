@@ -1,18 +1,24 @@
 export type ConciergeTone = 'luxury_classic' | 'modern_executive' | 'sommelier' | 'resort_leisure';
 
 export type KnowledgeCategory = 
+  | 'developments' 
+  | 'methodology' 
+  | 'architecture' 
+  | 'legacy' 
+  | 'land_acquisition' 
+  | 'consultations' 
+  | 'exclusive_services' 
+  | 'general'
   | 'gastronomy' 
   | 'suites' 
   | 'spa' 
   | 'transport' 
   | 'rules_hours' 
-  | 'exclusive_services' 
-  | 'events' 
-  | 'general';
+  | 'events';
 
 export interface ServiceAction {
   id: string;
-  type: 'reservation' | 'room_service' | 'spa' | 'transfer' | 'experience' | 'info';
+  type: 'consultation' | 'site_visit' | 'brochure' | 'design_review' | 'reservation' | 'experience' | 'info' | 'room_service' | 'spa' | 'transfer';
   title: string;
   description: string;
   status: 'pending' | 'confirmed' | 'requested';

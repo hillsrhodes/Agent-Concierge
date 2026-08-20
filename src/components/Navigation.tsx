@@ -38,11 +38,11 @@ export const Navigation: React.FC<NavigationProps> = ({
                 Agent Concierge
               </span>
               <span className="inline-flex items-center rounded-full bg-zinc-100 border border-zinc-200 px-2 py-0.5 text-[10px] font-semibold text-zinc-600 tracking-wide uppercase">
-                Grand Lumière
+                Harmony Homes
               </span>
             </div>
             <p className="hidden sm:flex text-xs text-zinc-400 items-center gap-1 font-normal">
-              <Hotel className="h-3 w-3 text-zinc-400" /> Digital Concierge & Hospitality AI
+              <Hotel className="h-3 w-3 text-zinc-400" /> Master Luxury Real Estate Advisor & Concierge
             </p>
           </div>
         </div>

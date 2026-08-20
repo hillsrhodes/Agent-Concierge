@@ -1,17 +1,14 @@
 import React from 'react';
 import { 
-  Hotel, 
-  Utensils, 
+  Building2, 
+  Compass, 
   Sparkles, 
-  MapPin, 
-  Calendar, 
   Star, 
-  Phone, 
-  Mail, 
-  Compass,
   ArrowRight,
   ShieldCheck,
-  Car
+  Landmark,
+  Layers,
+  MapPin
 } from 'lucide-react';
 
 interface WordPressSimulatorProps {
@@ -31,7 +28,7 @@ export const WordPressSimulator: React.FC<WordPressSimulatorProps> = ({
         <div className="flex items-center space-x-2">
           <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
           <span className="font-semibold">WordPress Website Live Simulation:</span>
-          <span className="text-zinc-400 hidden sm:inline">The Grand Lumière Hotel & Residences (Luxury Theme)</span>
+          <span className="text-zinc-400 hidden sm:inline">Harmony Homes • Las Vegas Luxury Custom Residences</span>
         </div>
 
         <div className="flex items-center space-x-2">
@@ -57,18 +54,21 @@ export const WordPressSimulator: React.FC<WordPressSimulatorProps> = ({
         <section className="relative rounded-3xl bg-zinc-900 text-white p-8 sm:p-14 overflow-hidden shadow-xl border border-zinc-800">
           <div className="relative z-10 max-w-2xl space-y-4">
             <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-zinc-400">
-              <Star className="h-3.5 w-3.5 text-zinc-400 fill-zinc-400" />
-              <span>5-Star Ultra Luxury & Haute Gastronomy</span>
+              <Star className="h-3.5 w-3.5 text-[#87735A] fill-[#87735A]" />
+              <span>Over 40 Years of Luxury Building Excellence</span>
             </div>
             <h1 className="text-3xl sm:text-5xl font-bold tracking-tight leading-tight">
-              An Immersive Legacy in Luxury Hospitality
+              Translating Vision into Architectural Reality
             </h1>
             <p className="text-sm sm:text-base text-zinc-400 leading-relaxed">
-              Welcome to The Grand Lumière. Experience 3-Michelin-starred dining, bespoke 24k gold spa rituals, and our 24/7 AI-powered Master Concierge grounded in the hotel's verified knowledge base.
+              Welcome to Harmony Homes. Guided by founder Jim Rhodes, we pioneer custom luxury residences, Desert Modernism aesthetics, and end-to-end Design & Build mastery across Las Vegas.
             </p>
             <div className="pt-2 flex flex-wrap gap-3">
-              <button className="rounded-xl bg-white text-zinc-900 px-5 py-2.5 text-xs font-bold hover:bg-zinc-100 transition-all shadow-xs cursor-pointer">
-                Reserve a Suite
+              <button 
+                onClick={onOpenEmbedModal}
+                className="rounded-xl bg-white text-zinc-900 px-5 py-2.5 text-xs font-bold hover:bg-zinc-100 transition-all shadow-xs cursor-pointer"
+              >
+                Schedule Private Consultation
               </button>
               <button 
                 onClick={onOpenEmbedModal}
@@ -84,32 +84,32 @@ export const WordPressSimulator: React.FC<WordPressSimulatorProps> = ({
         {/* Feature Grid */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-900">
-              <Utensils className="h-5 w-5" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-[#87735A]">
+              <Building2 className="h-5 w-5" />
             </div>
-            <h3 className="text-base font-bold text-zinc-900">Le Miroir Restaurant (3★ Michelin)</h3>
+            <h3 className="text-base font-bold text-zinc-900">Egan Crest (Coming 2026)</h3>
             <p className="text-xs text-zinc-600 leading-relaxed">
-              Contemporary French Haute Cuisine helmed by Executive Chef Antoine Laurent with an 8-course tasting menu and Grand Cru pairings.
+              Elevated luxury enclave showcasing Desert Modernism architecture, panoramic unobstructed Las Vegas Strip views, and multi-slide pocket glass walls.
             </p>
           </div>
 
           <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-900">
-              <Sparkles className="h-5 w-5" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-[#87735A]">
+              <Layers className="h-5 w-5" />
             </div>
-            <h3 className="text-base font-bold text-zinc-900">L'Élixir Spa & Wellness</h3>
+            <h3 className="text-base font-bold text-zinc-900">5-Step Design & Build</h3>
             <p className="text-xs text-zinc-600 leading-relaxed">
-              Signature 24k Royal Gold restorative rituals, Swiss Valmont therapies, dry Finnish saunas, and ozone heated infinity pool.
+              Proprietary turnkey methodology: 1. Vision & Strategy | 2. Integrated Planning | 3. Engineering Alignment | 4. Precision Execution | 5. Turnkey Delivery.
             </p>
           </div>
 
           <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-xs space-y-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-zinc-900">
-              <Car className="h-5 w-5" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 text-[#87735A]">
+              <Landmark className="h-5 w-5" />
             </div>
-            <h3 className="text-base font-bold text-zinc-900">Mercedes-Maybach & Helipad</h3>
+            <h3 className="text-base font-bold text-zinc-900">SkyFire Estate Showcase</h3>
             <p className="text-xs text-zinc-600 leading-relaxed">
-              Private executive chauffeur fleet, 24/7 certified rooftop helipad, and bespoke Azimut 68-foot coastal yacht charter.
+              A completed modernist trophy residence featuring cantilevered steel pavilions, 500-bottle wine gallery, and seamless indoor-outdoor desert flow.
             </p>
           </div>
         </section>
@@ -118,10 +118,10 @@ export const WordPressSimulator: React.FC<WordPressSimulatorProps> = ({
         <section className="rounded-2xl border border-zinc-200 bg-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xs">
           <div className="space-y-1 text-left">
             <h4 className="text-base font-bold text-zinc-900">
-              Test the Floating Concierge in the bottom right corner
+              Experience the Agent Concierge in the bottom right corner
             </h4>
             <p className="text-xs text-zinc-500">
-              Click the widget button to chat in English and verify real-time knowledge base retrieval and table reservations.
+              Interact with the luxury real estate advisor to inquire about land acquisitions, architectural schematics, or schedule a private consultation with Jim Rhodes and leadership.
             </p>
           </div>
           <button

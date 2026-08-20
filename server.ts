@@ -342,48 +342,50 @@ ${knowledgeText}
       const actions: ServiceAction[] = [];
       const lowerReply = replyText.toLowerCase() + ' ' + message.toLowerCase();
 
-      if (lowerReply.includes('reserva') || lowerReply.includes('table') || lowerReply.includes('dinner') || lowerReply.includes('le miroir') || lowerReply.includes('restaurant')) {
+      if (lowerReply.includes('egan crest') || lowerReply.includes('egan') || lowerReply.includes('strip view') || lowerReply.includes('2026')) {
         actions.push({
           id: `act_${Date.now()}_1`,
-          type: 'reservation',
-          title: 'Table Reservation at Le Miroir',
-          description: 'Fine dining table at 3-Michelin-starred restaurant',
+          type: 'consultation',
+          title: 'Private Consultation - Egan Crest Enclave',
+          description: 'Topographical review & custom architectural homesite briefing (2026)',
           status: 'pending',
-          details: { venue: 'Le Miroir', status: 'Awaiting seating confirmation' }
+          details: { project: 'Egan Crest', focus: 'Panoramic Strip Views & Desert Modernism' }
         });
       }
 
-      if (lowerReply.includes('spa') || lowerReply.includes('massage') || lowerReply.includes('élixir') || lowerReply.includes('ritual')) {
+      if (lowerReply.includes('consultation') || lowerReply.includes('meeting') || lowerReply.includes('jim rhodes') || lowerReply.includes('schedule') || lowerReply.includes('leadership')) {
         actions.push({
           id: `act_${Date.now()}_2`,
-          type: 'spa',
-          title: 'L\'Élixir Spa Appointment',
-          description: 'Signature restorative wellness therapy',
+          type: 'consultation',
+          title: 'Executive Advisory Session',
+          description: 'Direct consultation with Principal Leadership Team on land & custom builds',
           status: 'pending',
-          details: { sanctuary: 'L\'Élixir Spa', treatment: 'Royal Wellness Ritual' }
+          details: { firm: 'Harmony Homes', host: 'Jim Rhodes & Principal Architects' }
         });
       }
 
-      if (lowerReply.includes('transfer') || lowerReply.includes('airport') || lowerReply.includes('maybach') || lowerReply.includes('chauffeur') || lowerReply.includes('helipad')) {
+      if (lowerReply.includes('5-step') || lowerReply.includes('methodology') || lowerReply.includes('design & build') || lowerReply.includes('turnkey')) {
         actions.push({
           id: `act_${Date.now()}_3`,
-          type: 'transfer',
-          title: 'Private Chauffeur Transfer',
-          description: 'Executive vehicle with bilingual chauffeur at your service',
+          type: 'consultation',
+          title: '5-Step Design & Build Dossier',
+          description: 'Comprehensive engineering alignment and turnkey execution overview',
           status: 'pending',
-          details: { fleet: 'Mercedes-Maybach S-Class', service: 'VIP Airport Transfer' }
+          details: { process: 'Vision -> Planning -> Engineering -> Execution -> Turnkey Delivery' }
         });
       }
 
-      let detectedTopic = 'General Concierge';
-      if (lowerReply.includes('restaurant') || lowerReply.includes('dinner') || lowerReply.includes('wine') || lowerReply.includes('menu') || lowerReply.includes('miroir')) {
-        detectedTopic = 'Fine Dining & Wine';
-      } else if (lowerReply.includes('spa') || lowerReply.includes('massage') || lowerReply.includes('pool') || lowerReply.includes('wellness')) {
-        detectedTopic = 'Spa & Wellness';
-      } else if (lowerReply.includes('transfer') || lowerReply.includes('airport') || lowerReply.includes('flight') || lowerReply.includes('maybach')) {
-        detectedTopic = 'Chauffeur & Transfers';
-      } else if (lowerReply.includes('suite') || lowerReply.includes('room') || lowerReply.includes('check') || lowerReply.includes('penthouse')) {
-        detectedTopic = 'Suites & Accommodations';
+      let detectedTopic = 'Custom Luxury Real Estate';
+      if (lowerReply.includes('egan crest') || lowerReply.includes('egan') || lowerReply.includes('strip')) {
+        detectedTopic = 'Egan Crest (2026)';
+      } else if (lowerReply.includes('5-step') || lowerReply.includes('methodology') || lowerReply.includes('process')) {
+        detectedTopic = '5-Step Design & Build';
+      } else if (lowerReply.includes('skyfire') || lowerReply.includes('architecture') || lowerReply.includes('desert modernism')) {
+        detectedTopic = 'Desert Modernism Architecture';
+      } else if (lowerReply.includes('rhodes') || lowerReply.includes('legacy') || lowerReply.includes('history') || lowerReply.includes('years')) {
+        detectedTopic = 'Jim Rhodes Legacy (40+ Yrs)';
+      } else if (lowerReply.includes('consultation') || lowerReply.includes('schedule') || lowerReply.includes('advisory')) {
+        detectedTopic = 'Executive Consultation';
       }
 
       // 9. Record Assistant response in logs

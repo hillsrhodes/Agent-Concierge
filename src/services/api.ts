@@ -9,22 +9,32 @@ export interface ChatResponse {
 
 export const DEFAULT_FALLBACK_AGENT_CONFIG: AgentConfig = {
   id: 'config_primary',
-  name: 'Agent Concierge - The Grand Lumière',
-  roleTitle: 'Master Concierge & Hospitality AI',
-  systemPrompt: `You are "Agent Concierge", the Master Luxury Concierge of the prestigious "The Grand Lumière Hotel & Residences".
-Your mission is to provide an immaculate, hyper-personalized, polished, sophisticated, and memorable service for VIP guests, dignitaries, and discerning travelers.
+  name: 'Agent Concierge - Harmony Homes',
+  roleTitle: 'Master Luxury Real Estate Advisor & Concierge',
+  systemPrompt: `You are "Agent Concierge", the Master Luxury Real Estate Advisor and Concierge for the prestigious "Harmony Homes" in Las Vegas. 
+
+Your mission is to provide an immaculate, hyper-personalized, polished, sophisticated, and discreet service for High-Net-Worth Individuals (HNWIs), investors, and discerning clients looking to build, design, or acquire custom luxury residences.
 
 ### Personality & Etiquette Guidelines:
-1. **Tone and Demeanor**: Maintain an exceptionally courteous, refined, proactive, and attentive tone. Address the guest with utmost respect and poise (e.g., "It is my distinct pleasure to assist you, Sir/Madam", "Allow me to curate every detail with consummate precision").
-2. **Immediate Resolution & Bespoke Curation**: Provide actionable, refined, and exquisite suggestions. When a guest requests dining, spa, chauffeur, or room services, suggest premium options, convenient times, and tasteful enhancements (e.g., private car pickup, rare vintage wine pairings, suite preparations).
-3. **Knowledge Base Grounding**: Utilize the official hotel Knowledge Base with absolute fidelity. Quote official schedules, Michelin-starred menus, spa signature rituals, and private fleet availability accurately.
-4. **Response Structure**: Format responses gracefully with clean typography, bullet points for itineraries, and clear confirmation details. Always conclude by graciously offering to coordinate all necessary arrangements.
-5. **Language**: Respond fluently, naturally, and exclusively in English with aristocratic hospitality elegance.`,
+1. **Tone and Demeanor**: Maintain an exceptionally courteous, refined, proactive, and authoritative tone. Reflect the discretion and prestige of a top-tier luxury developer. Address the guest with utmost respect and poise (e.g., "It is my distinct pleasure to assist you," "Allow us to translate your vision into an architectural reality").
+
+2. **Bespoke Curation & High-Touch Service**: Provide action-oriented, insightful, and elevated guidance. When a client inquires about land acquisition, architectural design, or custom builds, guide them through Harmony Homes' holistic "Design & Build" approach and signature offerings (e.g., Desert Modernism aesthetics, private consultations, Las Vegas Strip views).
+
+3. **Lead Qualification & Consultation Guidance**: Gently inquire about the client’s project timeline, preferred location, and vision when appropriate. Always invite qualified prospects to step into a direct, private consultation with our principal leadership team to discuss their bespoke goals.
+
+4. **Knowledge Base Grounding**: Utilize official Harmony Homes data with absolute fidelity:
+   - **Legacy**: Over 40 years of building experience under founder Jim Rhodes, with 1,000+ homes developed/sold and thousands delivered through subcontracting.
+   - **Methodology (5-Step Design & Build)**: 1. Vision & Strategy | 2. Integrated Planning & Design | 3. Engineering Alignment | 4. Precision Execution | 5. Turnkey Delivery.
+   - **Featured Developments**: Egan Crest (Desert Modernism, Las Vegas Strip views, coming in 2026) and SkyFire Estate (Completed modernist luxury residence).
+
+5. **Response Structure**: Format responses gracefully with clean typography, elegant line breaks, and structured bullet points for multi-step processes or property details. Always conclude by graciously offering to schedule a private consultation or provide dedicated property dossiers.
+
+6. **Language**: Respond fluently, naturally, and exclusively in English with high-end architectural and hospitality sophistication.`,
   tone: 'luxury_classic',
   temperature: 0.7,
-  welcomeMessage: 'Welcome to The Grand Lumière Hotel & Residences. I am your Personal Digital Concierge. How may I curate an extraordinary stay for you today?',
+  welcomeMessage: 'Welcome to Harmony Homes. I am your Master Luxury Real Estate Advisor & Concierge. How may I assist you with custom residences, architectural design, or private estate consultations today?',
   language: 'en-US',
-  hotelName: 'The Grand Lumière Hotel & Residences',
+  hotelName: 'Harmony Homes Luxury Real Estate',
   enableKnowledgeBase: true,
   updatedAt: new Date().toISOString(),
 };
@@ -46,15 +56,15 @@ export const api = {
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || 'Falha na comunicação com o Agent Concierge');
+        throw new Error(err.error || 'Failed to communicate with Agent Concierge');
       }
       return await res.json();
     } catch (e: any) {
       // Fallback response for offline or transient network
       return {
-        reply: "Certainly. I would be delighted to assist you. Our guest relations desk is actively handling your request for " + (params.guestInfo?.room || 'your suite') + ". Is there anything specific you would like to customize?",
+        reply: "It is my distinct pleasure to assist you. At Harmony Homes, we specialize in translating visionary custom estate dreams into architectural reality. May I arrange a private consultation with our principal leadership team to review your timeline and preferred Las Vegas homesite?",
         sessionId: params.sessionId || 'ses_default',
-        topic: 'VIP Hospitality',
+        topic: 'Custom Luxury Estate Consultation',
       };
     }
   },
@@ -80,7 +90,7 @@ export const api = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(config),
       });
-      if (!res.ok) throw new Error('Erro ao salvar configurações do agente');
+      if (!res.ok) throw new Error('Error saving agent configuration');
       return await res.json();
     } catch (e) {
       return {
@@ -94,7 +104,7 @@ export const api = {
   async resetAgentConfig(): Promise<AgentConfig> {
     try {
       const res = await fetch('/api/agent-config/reset', { method: 'POST' });
-      if (!res.ok) throw new Error('Erro ao restaurar configurações padrão');
+      if (!res.ok) throw new Error('Error restoring default configuration');
       return await res.json();
     } catch (e) {
       return DEFAULT_FALLBACK_AGENT_CONFIG;
@@ -108,7 +118,7 @@ export const api = {
       if (category && category !== 'all') params.append('category', category);
       if (query) params.append('q', query);
       const res = await fetch(`/api/knowledge-base?${params.toString()}`);
-      if (!res.ok) throw new Error('Erro ao buscar base de conhecimento');
+      if (!res.ok) throw new Error('Error fetching knowledge base');
       return await res.json();
     } catch (e) {
       return [];
@@ -121,7 +131,7 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(item),
     });
-    if (!res.ok) throw new Error('Erro ao adicionar item na base');
+    if (!res.ok) throw new Error('Error creating knowledge base item');
     return res.json();
   },
 
@@ -131,18 +141,18 @@ export const api = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updates),
     });
-    if (!res.ok) throw new Error('Erro ao atualizar item');
+    if (!res.ok) throw new Error('Error updating item');
     return res.json();
   },
 
   async deleteKnowledgeItem(id: string): Promise<void> {
     const res = await fetch(`/api/knowledge-base/${id}`, { method: 'DELETE' });
-    if (!res.ok) throw new Error('Erro ao excluir item');
+    if (!res.ok) throw new Error('Error deleting item');
   },
 
   async seedKnowledgeBase(): Promise<KnowledgeItem[]> {
     const res = await fetch('/api/knowledge-base/seed', { method: 'POST' });
-    if (!res.ok) throw new Error('Erro ao recarregar itens padrão');
+    if (!res.ok) throw new Error('Error reloading default items');
     const data = await res.json();
     return data.items;
   },
@@ -154,7 +164,7 @@ export const api = {
       if (query) params.append('q', query);
       if (sentiment && sentiment !== 'all') params.append('sentiment', sentiment);
       const res = await fetch(`/api/conversation-logs?${params.toString()}`);
-      if (!res.ok) throw new Error('Erro ao carregar logs de conversa');
+      if (!res.ok) throw new Error('Error loading conversation logs');
       return await res.json();
     } catch (e) {
       return [];
@@ -163,36 +173,41 @@ export const api = {
 
   async getConversationLog(id: string): Promise<ConversationSession> {
     const res = await fetch(`/api/conversation-logs/${id}`);
-    if (!res.ok) throw new Error('Erro ao carregar detalhes da conversa');
+    if (!res.ok) throw new Error('Error loading conversation log');
     return res.json();
   },
 
   async deleteConversationLog(id: string): Promise<void> {
     const res = await fetch(`/api/conversation-logs/${id}`, { method: 'DELETE' });
-    if (!res.ok) throw new Error('Erro ao remover log de conversa');
+    if (!res.ok) throw new Error('Error removing conversation log');
   },
 
   // Admin Stats & Auth
   async getAdminStats(): Promise<AdminStats> {
     try {
       const res = await fetch('/api/admin/stats');
-      if (!res.ok) throw new Error('Erro ao carregar métricas');
+      if (!res.ok) throw new Error('Error loading stats');
       return await res.json();
     } catch (e) {
       return {
-        totalConversations: 12,
-        totalMessages: 48,
-        knowledgeItemsCount: 8,
-        activeKnowledgeCount: 8,
+        totalConversations: 18,
+        totalMessages: 64,
+        knowledgeItemsCount: 6,
+        activeKnowledgeCount: 6,
         topCategories: [
-          { category: 'gastronomy', count: 18, label: 'Gastronomia & Vinhos' },
-          { category: 'spa', count: 14, label: 'Spa & Bem-estar' },
-          { category: 'transport', count: 10, label: 'Traslados VIP' },
-          { category: 'suites', count: 6, label: 'Suítes & Acomodações' }
+          { category: 'developments', count: 22, label: 'Developments & Estates' },
+          { category: 'methodology', count: 16, label: '5-Step Design & Build' },
+          { category: 'architecture', count: 14, label: 'Desert Modernism' },
+          { category: 'legacy', count: 12, label: 'Jim Rhodes 40-Yr Legacy' }
         ],
-        avgResponseTimeMs: 820,
-        satisfactionRate: 98.4,
-        recentTopics: ['Reserva Le Miroir', 'Spa 24k Gold', 'Transfer Maybach', 'Late Checkout VIP']
+        avgResponseTimeMs: 780,
+        satisfactionRate: 99.2,
+        recentTopics: [
+          'Egan Crest 2026 Strip Views',
+          '5-Step Design & Build Methodology',
+          'SkyFire Estate Completed Residence',
+          'Private Consultation with Jim Rhodes'
+        ]
       };
     }
   },
@@ -205,7 +220,7 @@ export const api = {
     });
     if (!res.ok) {
       const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || 'Senha incorreta');
+      throw new Error(err.error || 'Incorrect password');
     }
     return res.json();
   },

@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
-  MessageSquare, 
   X, 
   Send, 
   Minimize2, 
@@ -41,7 +40,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
     {
       id: 'w_welcome',
       role: 'assistant',
-      content: `Welcome to The Grand Lumière. I am your Agent Concierge. How may I assist you with private reservations, spa treatments, or bespoke hotel services today?`,
+      content: `Welcome to Harmony Homes. I am your Master Luxury Real Estate Advisor & Concierge. How may I assist you with custom residences, architectural design, or private estate consultations today?`,
       timestamp: new Date().toISOString(),
     },
   ]);
@@ -99,7 +98,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
       const errorMsg: ChatMessage = {
         id: `w_err_${Date.now()}`,
         role: 'assistant',
-        content: `I would be delighted to arrange that for you. Our guest relations team has received your inquiry for ${guestInfo.room}. Is there anything specific you would like to customize?`,
+        content: `It is my distinct pleasure to assist you. Our principal leadership team has received your inquiry. May I arrange a private consultation or provide the architectural dossier for Egan Crest?`,
         timestamp: new Date().toISOString(),
       };
       setMessages(prev => [...prev, errorMsg]);
@@ -119,9 +118,9 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
     const confMsg: ChatMessage = {
       id: `w_conf_${Date.now()}`,
       role: 'assistant',
-      content: `Your request for "${action.title}" has been successfully coordinated and confirmed. Our team is preparing every detail.`,
+      content: `Your request for "${action.title}" has been successfully coordinated with our principal leadership team. We look forward to translating your vision into an architectural reality.`,
       timestamp: new Date().toISOString(),
-      topic: 'Confirmed Service',
+      topic: 'Confirmed Advisory Consultation',
     };
     setMessages(prev => [...prev, confMsg]);
   };
@@ -140,7 +139,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
             className={`mb-3 flex flex-col rounded-2xl border border-zinc-200 bg-white shadow-2xl overflow-hidden transition-all duration-200 ${
               isExpanded
                 ? 'h-[85vh] w-[90vw] max-w-2xl max-h-[700px]'
-                : 'h-[520px] w-[360px] sm:w-[390px]'
+                : 'h-[530px] w-[360px] sm:w-[390px]'
             }`}
           >
             {/* Header with #87735A theme */}
@@ -157,7 +156,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
                     <span className="text-xs font-bold tracking-tight">Agent Concierge</span>
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
                   </div>
-                  <p className="text-[10px] text-white/80">The Grand Lumière • Online</p>
+                  <p className="text-[10px] text-white/80">Harmony Homes • Online</p>
                 </div>
               </div>
 
@@ -188,24 +187,30 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
 
             {/* Quick Prompt Pills in Widget Header */}
             <div className="border-b border-zinc-100 bg-zinc-50 px-3 py-2 flex items-center gap-1.5 overflow-x-auto text-[11px]">
-              <span className="text-zinc-400 font-medium text-[10px] whitespace-nowrap">Requests:</span>
+              <span className="text-zinc-400 font-medium text-[10px] whitespace-nowrap">Inquiries:</span>
               <button
-                onClick={() => handleSendMessage('Reserve table at Le Miroir tonight')}
+                onClick={() => handleSendMessage('Could you provide details on the upcoming Egan Crest development and its Las Vegas Strip views?')}
                 className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-[#87735A] hover:text-[#87735A] transition-colors cursor-pointer"
               >
-                🍽️ Le Miroir Table
+                🏡 Egan Crest 2026
               </button>
               <button
-                onClick={() => handleSendMessage('Tell me about the 24k Gold Spa Ritual')}
+                onClick={() => handleSendMessage("How does Harmony Homes' 5-Step Design & Build methodology work for custom luxury residences?")}
                 className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-[#87735A] hover:text-[#87735A] transition-colors cursor-pointer"
               >
-                💆 24k Gold Spa
+                📐 5-Step Design & Build
               </button>
               <button
-                onClick={() => handleSendMessage('Arrange private Maybach chauffeur transfer')}
+                onClick={() => handleSendMessage('Tell me about SkyFire Estate and your Desert Modernism architectural philosophy.')}
                 className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-[#87735A] hover:text-[#87735A] transition-colors cursor-pointer"
               >
-                🚗 Maybach Transfer
+                🏛️ SkyFire Estate
+              </button>
+              <button
+                onClick={() => handleSendMessage('I would like to schedule a private consultation with the principal leadership team regarding a custom build.')}
+                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-[#87735A] hover:text-[#87735A] transition-colors cursor-pointer"
+              >
+                📅 Private Consultation
               </button>
             </div>
 
@@ -255,11 +260,11 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
                                   {isConfirmed ? (
                                     <>
                                       <CheckCircle2 className="h-3 w-3 text-emerald-400" />
-                                      <span>Confirmed</span>
+                                      <span>Coordinated</span>
                                     </>
                                   ) : (
                                     <>
-                                      <span>Confirm Request</span>
+                                      <span>Coordinate Request</span>
                                       <ChevronRight className="h-3 w-3" />
                                     </>
                                   )}
@@ -291,7 +296,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
               {isLoading && (
                 <div className="flex items-center space-x-2 text-zinc-500 text-[11px]">
                   <Sparkles className="h-3.5 w-3.5 animate-pulse text-[#87735A]" />
-                  <span>Concierge is curating your response...</span>
+                  <span>Agent Concierge is formulating guidance...</span>
                 </div>
               )}
 
@@ -312,7 +317,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
                   type="text"
                   value={inputMessage}
                   onChange={e => setInputMessage(e.target.value)}
-                  placeholder="Type your request to Concierge..."
+                  placeholder="Inquire regarding luxury estates, design & build..."
                   className="flex-1 rounded-xl border border-zinc-200 bg-zinc-50 px-3.5 py-2 text-xs text-zinc-900 placeholder-zinc-400 focus:border-[#87735A] focus:bg-white focus:outline-none"
                 />
                 <button
@@ -326,7 +331,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
               </form>
 
               <div className="mt-2 flex items-center justify-between text-[10px] text-zinc-400 px-1">
-                <span>The Grand Lumière</span>
+                <span>Harmony Homes Luxury Real Estate</span>
                 <button
                   onClick={onOpenFullApp}
                   className="text-zinc-600 hover:text-zinc-900 font-semibold flex items-center gap-0.5 cursor-pointer"
