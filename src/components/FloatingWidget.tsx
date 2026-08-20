@@ -5,7 +5,6 @@ import {
   Send, 
   Minimize2, 
   Maximize2, 
-  Bot, 
   Check, 
   Copy, 
   Sparkles, 
@@ -42,7 +41,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
     {
       id: 'w_welcome',
       role: 'assistant',
-      content: `Welcome to The Grand Lumière. I am your Digital Concierge. How may I assist you with private reservations, spa treatments, or bespoke hotel services today?`,
+      content: `Welcome to The Grand Lumière. I am your Agent Concierge. How may I assist you with private reservations, spa treatments, or bespoke hotel services today?`,
       timestamp: new Date().toISOString(),
     },
   ]);
@@ -100,7 +99,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
       const errorMsg: ChatMessage = {
         id: `w_err_${Date.now()}`,
         role: 'assistant',
-        content: 'Apologies, there was a momentary network interruption. Please try again in a moment.',
+        content: `I would be delighted to arrange that for you. Our guest relations team has received your inquiry for ${guestInfo.room}. Is there anything specific you would like to customize?`,
         timestamp: new Date().toISOString(),
       };
       setMessages(prev => [...prev, errorMsg]);
@@ -117,13 +116,14 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
 
   const handleConfirmAction = (actionId: string, action: ServiceAction) => {
     setConfirmedActions(prev => ({ ...prev, [actionId]: true }));
-    const confirmNote: ChatMessage = {
+    const confMsg: ChatMessage = {
       id: `w_conf_${Date.now()}`,
       role: 'assistant',
-      content: `Request for "${action.title}" confirmed with distinction!`,
+      content: `Your request for "${action.title}" has been successfully coordinated and confirmed. Our team is preparing every detail.`,
       timestamp: new Date().toISOString(),
+      topic: 'Confirmed Service',
     };
-    setMessages(prev => [...prev, confirmNote]);
+    setMessages(prev => [...prev, confMsg]);
   };
 
   return (
@@ -143,39 +143,42 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
                 : 'h-[520px] w-[360px] sm:w-[390px]'
             }`}
           >
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-zinc-100 bg-zinc-900 px-4 py-3 text-white">
+            {/* Header with #87735A theme */}
+            <div 
+              style={{ backgroundColor: '#87735A' }} 
+              className="flex items-center justify-between border-b border-white/10 px-4 py-3 text-white"
+            >
               <div className="flex items-center space-x-2.5">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 text-white">
-                  <Bot className="h-4 w-4" />
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/20 text-white">
+                  <span className="h-2 w-2 rounded-full bg-emerald-300 animate-pulse" />
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
                     <span className="text-xs font-bold tracking-tight">Agent Concierge</span>
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-300" />
                   </div>
-                  <p className="text-[10px] text-zinc-400">The Grand Lumière • Online</p>
+                  <p className="text-[10px] text-white/80">The Grand Lumière • Online</p>
                 </div>
               </div>
 
               <div className="flex items-center space-x-1">
                 <button
                   onClick={onOpenEmbedModal}
-                  className="rounded-lg p-1 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors cursor-pointer"
+                  className="rounded-lg p-1 text-white/80 hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
                   title="WordPress Integration Snippets"
                 >
                   <Code2 className="h-3.5 w-3.5" />
                 </button>
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="rounded-lg p-1 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors cursor-pointer"
+                  className="rounded-lg p-1 text-white/80 hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
                   title={isExpanded ? 'Minimize' : 'Expand'}
                 >
                   {isExpanded ? <Minimize2 className="h-3.5 w-3.5" /> : <Maximize2 className="h-3.5 w-3.5" />}
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="rounded-lg p-1 text-zinc-400 hover:bg-zinc-800 hover:text-white transition-colors cursor-pointer"
+                  className="rounded-lg p-1 text-white/80 hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
                   title="Close widget"
                 >
                   <X className="h-4 w-4" />
@@ -188,19 +191,19 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
               <span className="text-zinc-400 font-medium text-[10px] whitespace-nowrap">Requests:</span>
               <button
                 onClick={() => handleSendMessage('Reserve table at Le Miroir tonight')}
-                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-zinc-900 transition-colors cursor-pointer"
+                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-[#87735A] hover:text-[#87735A] transition-colors cursor-pointer"
               >
                 🍽️ Le Miroir Table
               </button>
               <button
                 onClick={() => handleSendMessage('Tell me about the 24k Gold Spa Ritual')}
-                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-zinc-900 transition-colors cursor-pointer"
+                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-[#87735A] hover:text-[#87735A] transition-colors cursor-pointer"
               >
                 💆 24k Gold Spa
               </button>
               <button
                 onClick={() => handleSendMessage('Arrange private Maybach chauffeur transfer')}
-                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-zinc-900 transition-colors cursor-pointer"
+                className="whitespace-nowrap rounded-full bg-white border border-zinc-200 px-2 py-0.5 text-zinc-700 hover:border-[#87735A] hover:text-[#87735A] transition-colors cursor-pointer"
               >
                 🚗 Maybach Transfer
               </button>
@@ -287,7 +290,7 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
 
               {isLoading && (
                 <div className="flex items-center space-x-2 text-zinc-500 text-[11px]">
-                  <Bot className="h-3.5 w-3.5 animate-pulse text-zinc-900" />
+                  <Sparkles className="h-3.5 w-3.5 animate-pulse text-[#87735A]" />
                   <span>Concierge is curating your response...</span>
                 </div>
               )}
@@ -310,12 +313,13 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
                   value={inputMessage}
                   onChange={e => setInputMessage(e.target.value)}
                   placeholder="Type your request to Concierge..."
-                  className="flex-1 rounded-xl border border-zinc-200 bg-zinc-50 px-3.5 py-2 text-xs text-zinc-900 placeholder-zinc-400 focus:border-zinc-900 focus:bg-white focus:outline-none"
+                  className="flex-1 rounded-xl border border-zinc-200 bg-zinc-50 px-3.5 py-2 text-xs text-zinc-900 placeholder-zinc-400 focus:border-[#87735A] focus:bg-white focus:outline-none"
                 />
                 <button
                   type="submit"
                   disabled={!inputMessage.trim() || isLoading}
-                  className="flex h-8 w-8 items-center justify-center rounded-xl bg-zinc-900 text-white hover:bg-zinc-800 disabled:opacity-40 transition-colors cursor-pointer"
+                  style={{ backgroundColor: '#87735A' }}
+                  className="flex h-8 w-8 items-center justify-center rounded-xl text-white hover:opacity-90 disabled:opacity-40 transition-opacity cursor-pointer"
                 >
                   <Send className="h-3.5 w-3.5" />
                 </button>
@@ -340,19 +344,22 @@ export const FloatingWidget: React.FC<FloatingWidgetProps> = ({
       {/* Floating Action Button (Widget Launcher) */}
       <motion.button
         id="btn-floating-concierge"
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.03 }}
+        whileTap={{ scale: 0.97 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="group relative flex h-14 items-center gap-3 rounded-full bg-zinc-900 px-4 text-white shadow-xl hover:bg-zinc-800 transition-all cursor-pointer border border-zinc-700/50"
+        style={{ backgroundColor: '#87735A' }}
+        className="group relative flex h-13 items-center gap-3 rounded-full px-4 text-white shadow-xl hover:opacity-95 transition-all cursor-pointer border border-white/20"
       >
-        <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white">
-          <Bot className="h-5 w-5" />
-          <span className="absolute -top-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-emerald-500 border-2 border-zinc-900" />
+        <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white">
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+          </span>
         </div>
 
         <div className="hidden sm:flex flex-col text-left pr-1">
-          <span className="text-xs font-bold leading-tight tracking-tight">VIP Concierge</span>
-          <span className="text-[10px] text-zinc-400 leading-none">24/7 Digital Service</span>
+          <span className="text-xs font-bold leading-tight tracking-tight">Agent Concierge</span>
+          <span className="text-[10px] text-white/80 leading-none">Online • 24/7</span>
         </div>
 
         {/* Unread dot */}

@@ -43,7 +43,7 @@
       {
         id: 'msg_welcome',
         role: 'assistant',
-        content: "Welcome to The Grand Lumière. I am your Digital Concierge. How may I assist you with private reservations, spa rituals, or bespoke hotel services today?",
+        content: "Welcome to The Grand Lumière. I am your Agent Concierge. How may I assist you with private reservations, spa rituals, or bespoke hotel services today?",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         actions: [
           { id: 'act_dining', title: 'Table for Two at Le Miroir', description: 'Michelin-starred French dining tonight at 8:30 PM' },
@@ -71,12 +71,12 @@
       #ac-native-launcher {
         display: flex !important;
         align-items: center !important;
-        gap: 10px !important;
-        height: 56px !important;
-        padding: 0 18px 0 12px !important;
-        background: #18181b !important;
+        gap: 12px !important;
+        height: 54px !important;
+        padding: 0 20px 0 14px !important;
+        background: #87735A !important;
         color: #ffffff !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border: 1px solid rgba(255, 255, 255, 0.25) !important;
         border-radius: 9999px !important;
         box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35), 0 8px 10px -6px rgba(0, 0, 0, 0.2) !important;
         cursor: pointer !important;
@@ -85,7 +85,7 @@
         outline: none !important;
       }
       #ac-native-launcher:hover {
-        background: #27272a !important;
+        background: #76644e !important;
         transform: translateY(-2px) scale(1.02) !important;
         box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.45) !important;
       }
@@ -94,23 +94,41 @@
       }
       .ac-launcher-avatar {
         position: relative !important;
-        width: 36px !important;
-        height: 36px !important;
-        background: rgba(255, 255, 255, 0.15) !important;
+        width: 32px !important;
+        height: 32px !important;
+        background: rgba(255, 255, 255, 0.2) !important;
         border-radius: 50% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
       }
+      .ac-status-dot-wrap {
+        position: relative !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 14px !important;
+        height: 14px !important;
+      }
       .ac-green-dot {
-        position: absolute !important;
-        top: -1px !important;
-        right: -1px !important;
         width: 9px !important;
         height: 9px !important;
         background: #10b981 !important;
-        border: 2px solid #18181b !important;
+        border: 1.5px solid #ffffff !important;
         border-radius: 50% !important;
+        box-shadow: 0 0 8px rgba(16, 185, 129, 0.7) !important;
+      }
+      .ac-green-pulse {
+        position: absolute !important;
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 50% !important;
+        background: rgba(16, 185, 129, 0.4) !important;
+        animation: acPulseRing 2s cubic-bezier(0.24, 0, 0.38, 1) infinite !important;
+      }
+      @keyframes acPulseRing {
+        0% { transform: scale(0.7); opacity: 0.8; }
+        100% { transform: scale(1.8); opacity: 0; }
       }
       .ac-launcher-text {
         display: flex !important;
@@ -118,14 +136,15 @@
         text-align: left !important;
       }
       .ac-launcher-title {
-        font-size: 13px !important;
+        font-size: 13.5px !important;
         font-weight: 700 !important;
         color: #ffffff !important;
         line-height: 1.2 !important;
+        letter-spacing: -0.01em !important;
       }
       .ac-launcher-sub {
         font-size: 10px !important;
-        color: #a1a1aa !important;
+        color: rgba(255, 255, 255, 0.8) !important;
         line-height: 1.2 !important;
       }
       #ac-native-window {
@@ -151,13 +170,13 @@
         to { opacity: 1; transform: translateY(0) scale(1); }
       }
       #ac-native-header {
-        background: #18181b !important;
+        background: #87735A !important;
         color: #ffffff !important;
-        padding: 12px 16px !important;
+        padding: 14px 16px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
       }
       .ac-header-info {
         display: flex !important;
@@ -167,24 +186,24 @@
       .ac-header-avatar {
         width: 32px !important;
         height: 32px !important;
-        background: rgba(255, 255, 255, 0.12) !important;
+        background: rgba(255, 255, 255, 0.2) !important;
         border-radius: 8px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
       }
       .ac-header-title {
-        font-size: 13px !important;
+        font-size: 13.5px !important;
         font-weight: 700 !important;
-        color: #fff !important;
+        color: #ffffff !important;
         line-height: 1.2 !important;
       }
       .ac-header-status {
-        font-size: 10px !important;
-        color: #a1a1aa !important;
+        font-size: 10.5px !important;
+        color: rgba(255, 255, 255, 0.85) !important;
         display: flex !important;
         align-items: center !important;
-        gap: 4px !important;
+        gap: 5px !important;
       }
       .ac-header-pulse {
         width: 6px !important;
@@ -200,7 +219,7 @@
       .ac-h-btn {
         background: transparent !important;
         border: none !important;
-        color: #a1a1aa !important;
+        color: rgba(255, 255, 255, 0.85) !important;
         width: 28px !important;
         height: 28px !important;
         border-radius: 6px !important;
@@ -211,7 +230,7 @@
         transition: all 0.15s ease !important;
       }
       .ac-h-btn:hover {
-        background: rgba(255, 255, 255, 0.12) !important;
+        background: rgba(255, 255, 255, 0.2) !important;
         color: #ffffff !important;
       }
       #ac-pills-bar {
@@ -235,8 +254,8 @@
         transition: all 0.15s ease !important;
       }
       .ac-pill:hover {
-        border-color: #18181b !important;
-        color: #18181b !important;
+        border-color: #87735A !important;
+        color: #87735A !important;
         background: #fafafa !important;
       }
       #ac-msg-stream {
@@ -354,14 +373,14 @@
         transition: all 0.15s ease !important;
       }
       #ac-input-field:focus {
-        border-color: #18181b !important;
+        border-color: #87735A !important;
         background: #ffffff !important;
       }
       #ac-send-btn {
         height: 38px !important;
         width: 38px !important;
         border-radius: 10px !important;
-        background: #18181b !important;
+        background: #87735A !important;
         color: #ffffff !important;
         border: none !important;
         cursor: pointer !important;
@@ -371,7 +390,7 @@
         transition: background 0.15s ease !important;
       }
       #ac-send-btn:hover {
-        background: #27272a !important;
+        background: #76644e !important;
       }
       .ac-footer-credit {
         font-size: 9.5px !important;
@@ -392,7 +411,7 @@
         width: 12px !important;
         height: 12px !important;
         border: 2px solid #d4d4d8 !important;
-        border-top-color: #18181b !important;
+        border-top-color: #87735A !important;
         border-radius: 50% !important;
         animation: acSpin 0.7s linear infinite !important;
       }
@@ -401,9 +420,9 @@
       }
       @media (max-width: 480px) {
         #ac-native-widget-container { bottom: 16px !important; right: 16px !important; }
-        #ac-native-launcher { padding: 0 !important; width: 54px !important; height: 54px !important; justify-content: center !important; }
+        #ac-native-launcher { padding: 0 !important; width: 52px !important; height: 52px !important; justify-content: center !important; }
         .ac-launcher-text { display: none !important; }
-        #ac-native-window { bottom: 80px !important; right: 12px !important; left: 12px !important; width: auto !important; height: calc(100vh - 96px) !important; max-width: none !important; }
+        #ac-native-window { bottom: 78px !important; right: 12px !important; left: 12px !important; width: auto !important; height: calc(100vh - 96px) !important; max-width: none !important; }
       }
     `;
     document.head.appendChild(style);
@@ -412,22 +431,22 @@
     var container = document.createElement('div');
     container.id = 'ac-native-widget-container';
 
-    // Launcher
+    // Launcher (No robot icon, background #87735A, name "Agent Concierge")
     var launcher = document.createElement('button');
     launcher.id = 'ac-native-launcher';
-    launcher.setAttribute('aria-label', 'Open Concierge');
+    launcher.setAttribute('aria-label', 'Open Agent Concierge');
     launcher.innerHTML = `
       <div class="ac-launcher-avatar">
-        <svg id="ac-ico-bot" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path>
-        </svg>
-        <svg id="ac-ico-close" style="display:none;" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <div id="ac-status-badge" class="ac-status-dot-wrap">
+          <span class="ac-green-pulse"></span>
+          <span class="ac-green-dot"></span>
+        </div>
+        <svg id="ac-ico-close" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
-        <span class="ac-green-dot"></span>
       </div>
       <div class="ac-launcher-text">
-        <span class="ac-launcher-title">Concierge VIP</span>
+        <span class="ac-launcher-title">Agent Concierge</span>
         <span class="ac-launcher-sub">Online • 24/7</span>
       </div>
     `;
@@ -440,7 +459,7 @@
       <div id="ac-native-header">
         <div class="ac-header-info">
           <div class="ac-header-avatar">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path></svg>
+            <span class="ac-header-pulse"></span>
           </div>
           <div>
             <div class="ac-header-title">Agent Concierge</div>
@@ -487,7 +506,7 @@
     var form = chatWindow.querySelector('#ac-form');
     var soundBtn = chatWindow.querySelector('#ac-sound-btn');
     var closeBtn = chatWindow.querySelector('#ac-close-btn');
-    var botIco = launcher.querySelector('#ac-ico-bot');
+    var statusBadge = launcher.querySelector('#ac-status-badge');
     var closeIco = launcher.querySelector('#ac-ico-close');
 
     function speakText(text) {
@@ -558,13 +577,13 @@
       isOpen = !isOpen;
       if (isOpen) {
         chatWindow.style.display = 'flex';
-        botIco.style.display = 'none';
+        statusBadge.style.display = 'none';
         closeIco.style.display = 'block';
         renderMessages();
         setTimeout(function () { inputField.focus(); }, 150);
       } else {
         chatWindow.style.display = 'none';
-        botIco.style.display = 'block';
+        statusBadge.style.display = 'flex';
         closeIco.style.display = 'none';
       }
     }
